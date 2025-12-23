@@ -50,7 +50,7 @@ export function CanvasArea({
 
   return (
     <div 
-      className="flex-1 bg-canvas overflow-auto"
+      className="flex-1 bg-[var(--canvas,var(--background))] overflow-auto"
       onDragOver={(e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
@@ -58,7 +58,7 @@ export function CanvasArea({
       onDrop={(e) => handleDrop(e, null)}
     >
       <div 
-        className="min-h-full p-8 canvas-bg"
+        className="min-h-full p-8"
       >
         {components.length === 0 ? (
           <div className="flex items-center justify-center h-[calc(100vh-200px)]">
@@ -195,12 +195,12 @@ function CanvasComponentWrapper({
       }}
       className={cn(
         'relative rounded-lg p-4 transition-all cursor-move group',
-        'bg-card/50 backdrop-blur-sm',
+        'bg-[color-mix(in_oklch,var(--card)_50%,transparent)] backdrop-blur-sm',
         isDragging && 'opacity-50',
-        isDropTarget && isContainer && 'ring-2 ring-success shadow-lg shadow-success/20',
+        isDropTarget && isContainer && 'ring-2 ring-[var(--success)] shadow-lg shadow-[color-mix(in_oklch,var(--success)_20%,transparent)]',
         isSelected 
-          ? 'ring-2 ring-primary shadow-lg shadow-primary/20' 
-          : 'hover:ring-1 hover:ring-border',
+          ? 'ring-2 ring-[var(--primary)] shadow-lg shadow-[color-mix(in_oklch,var(--primary)_20%,transparent)]' 
+          : 'hover:ring-1 hover:ring-[var(--border)]',
         depth > 0 && 'ml-4'
       )}
       data-depth={depth}
@@ -212,13 +212,13 @@ function CanvasComponentWrapper({
               e.stopPropagation();
               onDelete(component.id);
             }}
-            className="bg-destructive text-destructive-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform"
+            className="bg-[var(--destructive)] text-[var(--destructive-foreground)] rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform"
           >
             ×
           </button>
         </div>
       )}
-      <div className="absolute top-2 left-2 text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded z-10">
+      <div className="absolute top-2 left-2 text-xs font-medium text-[var(--primary)] bg-[color-mix(in_oklch,var(--primary)_10%,transparent)] px-2 py-1 rounded z-10">
         {component.type}
         {isContainer && ` (${component.children?.length || 0})`}
       </div>
@@ -246,7 +246,7 @@ function CanvasComponentWrapper({
         )}
       </div>
       {isContainer && component.children && component.children.length > 0 && (
-        <div className="mt-3 space-y-2 border-l-2 border-primary/20 pl-3">
+        <div className="mt-3 space-y-2 border-l-2 border-[color-mix(in_oklch,var(--primary)_20%,transparent)] pl-3">
           {component.children.map((child) => (
             <CanvasComponentWrapper
               key={child.id}
@@ -266,8 +266,8 @@ function CanvasComponentWrapper({
         </div>
       )}
       {isContainer && isDropTarget && (
-        <div className="mt-2 p-4 border-2 border-dashed border-success rounded-md bg-success/5">
-          <p className="text-xs text-center text-success font-medium">Drop here to nest</p>
+        <div className="mt-2 p-4 border-2 border-dashed border-[var(--success)] rounded-md bg-[color-mix(in_oklch,var(--success)_5%,transparent)]">
+          <p className="text-xs text-center text-[var(--success)] font-medium">Drop here to nest</p>
         </div>
       )}
     </div>

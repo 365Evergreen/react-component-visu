@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ColorPicker } from '@/components/ui/color-picker';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
@@ -177,16 +178,28 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent, collapsed 
 
               <div className="space-y-2">
                 <Label className="text-xs uppercase tracking-wide text-muted-foreground">Styling</Label>
-                <div>
-                  <Label htmlFor="styles" className="text-sm">Tailwind Classes</Label>
-                  <Textarea
-                    id="styles"
-                    value={selectedComponent.styles || ''}
-                    onChange={(e) => handleStyleChange(e.target.value)}
-                    placeholder="e.g., bg-blue-500 text-white p-4"
-                    className="mt-1 font-mono text-xs"
-                    rows={3}
+                <div className="flex flex-col gap-2">
+                  <ColorPicker
+                    label="Background"
+                    value={selectedComponent.props.bgColor || '#22223b'}
+                    onChange={val => handlePropChange('bgColor', val)}
                   />
+                  <ColorPicker
+                    label="Foreground"
+                    value={selectedComponent.props.fgColor || '#e0e0e0'}
+                    onChange={val => handlePropChange('fgColor', val)}
+                  />
+                  <div>
+                    <Label htmlFor="styles" className="text-sm">Tailwind Classes</Label>
+                    <Textarea
+                      id="styles"
+                      value={selectedComponent.styles || ''}
+                      onChange={(e) => handleStyleChange(e.target.value)}
+                      placeholder="e.g., bg-blue-500 text-white p-4"
+                      className="mt-1 font-mono text-xs"
+                      rows={3}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

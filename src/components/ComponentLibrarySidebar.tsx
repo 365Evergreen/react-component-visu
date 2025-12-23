@@ -37,24 +37,24 @@ export function ComponentLibrarySidebar({ onComponentSelect, collapsed = false, 
   }
 
   return (
-    <div className={`transition-all duration-200 bg-card border-r border-border flex flex-col h-full ${collapsed ? 'w-12 min-w-[3rem]' : 'w-72'}`}>
-      <div className="p-3 border-b border-border flex items-center gap-3">
+    <div className={`transition-all duration-200 bg-[var(--card)] border-r border-[var(--border)] flex flex-col h-full ${collapsed ? 'w-12 min-w-[3rem]' : 'w-72'}`}>
+      <div className="p-3 border-b border-[var(--border)] flex items-center gap-3">
         <button
-          className="mr-2 p-1 rounded hover:bg-muted"
+          className="mr-2 p-1 rounded hover:bg-[var(--muted)]"
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           onClick={onToggleCollapse}
         >
           <span aria-hidden>{collapsed ? '»' : '«'}</span>
         </button>
         {!collapsed && <>
-          <Box20Regular className="text-primary w-5 h-5" />
+          <Box20Regular className="text-[var(--primary)] w-5 h-5" />
           <h2 className="font-semibold text-base">Tools</h2>
         </>}
         {!collapsed && (
           <div className="ml-auto flex gap-1">
-            <button className={`px-3 py-1 rounded ${activeTab === 'components' ? 'bg-accent text-accent-foreground' : 'hover:bg-secondary/50'}`} onClick={() => setActiveTab('components')}>Components</button>
-            <button className={`px-3 py-1 rounded ${activeTab === 'layouts' ? 'bg-accent text-accent-foreground' : 'hover:bg-secondary/50'}`} onClick={() => setActiveTab('layouts')}>Layouts</button>
-            <button className={`px-3 py-1 rounded ${activeTab === 'theme' ? 'bg-accent text-accent-foreground' : 'hover:bg-secondary/50'}`} onClick={() => setActiveTab('theme')}>Theme</button>
+            <button className={`px-3 py-1 rounded ${activeTab === 'components' ? 'bg-[var(--accent)] text-[var(--accent-foreground)]' : 'hover:bg-[color-mix(in_oklch,var(--secondary)_50%,transparent)]'}`} onClick={() => setActiveTab('components')}>Components</button>
+            <button className={`px-3 py-1 rounded ${activeTab === 'layouts' ? 'bg-[var(--accent)] text-[var(--accent-foreground)]' : 'hover:bg-[color-mix(in_oklch,var(--secondary)_50%,transparent)]'}`} onClick={() => setActiveTab('layouts')}>Layouts</button>
+            <button className={`px-3 py-1 rounded ${activeTab === 'theme' ? 'bg-[var(--accent)] text-[var(--accent-foreground)]' : 'hover:bg-[color-mix(in_oklch,var(--secondary)_50%,transparent)]'}`} onClick={() => setActiveTab('theme')}>Theme</button>
           </div>
         )}
       </div>
@@ -62,12 +62,12 @@ export function ComponentLibrarySidebar({ onComponentSelect, collapsed = false, 
       {!collapsed && activeTab === 'components' && (
         <div className="p-3 flex-1 overflow-auto">
           <div className="relative mb-3">
-            <Search16Regular className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+            <Search16Regular className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] w-4 h-4" />
             <Input
               placeholder="Search components..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 bg-background"
+              className="pl-9 bg-[var(--background)]"
             />
           </div>
 
@@ -79,18 +79,18 @@ export function ComponentLibrarySidebar({ onComponentSelect, collapsed = false, 
               return (
                 <div key={category}>
                   <button
-                    className="flex items-center gap-2 w-full text-left font-medium text-sm py-1 px-2 rounded hover:bg-muted"
+                    className="flex items-center gap-2 w-full text-left font-medium text-sm py-1 px-2 rounded hover:bg-[var(--muted)]"
                     onClick={() => toggleCategory(category)}
                   >
                     <span>{category}</span>
-                    <span className="ml-auto text-xs text-muted-foreground">{isExpanded ? '-' : '+'}</span>
+                    <span className="ml-auto text-xs text-[var(--muted-foreground)]">{isExpanded ? '-' : '+'}</span>
                   </button>
                   {isExpanded && (
                     <div className="pl-4 space-y-1">
                       {components.map(comp => (
                         <button
                           key={comp.type}
-                          className="w-full text-left px-2 py-1 rounded hover:bg-accent/30"
+                          className="w-full text-left px-2 py-1 rounded hover:bg-[color-mix(in_oklch,var(--accent)_30%,transparent)]"
                           onClick={() => onComponentSelect(comp.type)}
                         >
                           <span className="font-mono text-xs mr-2">{comp.type}</span>

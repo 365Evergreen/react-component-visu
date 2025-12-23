@@ -11,7 +11,6 @@ const getInitialTheme = () => {
 };
 import { useState, useEffect } from 'react';
 import { getLayoutComponents } from '@/lib/layouts';
-import { useKV } from '@github/spark/hooks';
 import { Toaster, toast } from 'sonner';
 import { ComponentLibrarySidebar } from '@/components/ComponentLibrarySidebar';
 import { CanvasArea } from '@/components/CanvasArea';
@@ -32,11 +31,11 @@ function App() {
     document.documentElement.classList.toggle('dark', theme === 'dark');
     localStorage.setItem('theme-mode', theme);
   }, [theme]);
-  const [components, setComponents] = useKV<CanvasComponent[]>('canvas-components', []);
+  const [components, setComponents] = useState<CanvasComponent[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [exportHistory, setExportHistory] = useKV<any[]>('export-history', []);
-  const [pageLayout, setPageLayout] = useKV<string>('page-layout', 'landing');
-  const [themeTokens, setThemeTokens] = useKV<Record<string,string>>('theme-tokens', {});
+  const [exportHistory, setExportHistory] = useState<any[]>([]);
+  const [pageLayout, setPageLayout] = useState<string>("landing");
+  const [themeTokens, setThemeTokens] = useState<Record<string, string>>({});
   const [previewComponents, setPreviewComponents] = useState<CanvasComponent[] | null>(null);
 
   // convenience alias for current components

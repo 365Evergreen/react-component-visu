@@ -1,3 +1,27 @@
+/* Theme color variables from theme.json */
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(210 60% 2%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(210 60% 2%);
+  --primary: hsl(228 55% 25%);
+  --primary-foreground: hsl(0 0% 100%);
+  --border: hsl(0 0% 90%);
+  --muted: hsl(0 0% 96%);
+  --muted-foreground: hsl(0 0% 45%);
+}
+
+.dark, [data-theme="dark"] {
+  --background: hsl(230 25% 5%);
+  --foreground: hsl(0 0% 98%);
+  --card: hsl(230 25% 8%);
+  --card-foreground: hsl(0 0% 98%);
+  --primary: hsl(0 0% 94%);
+  --primary-foreground: hsl(230 25% 5%);
+  --border: hsl(230 25% 15%);
+  --muted: hsl(230 25% 12%);
+  --muted-foreground: hsl(0 0% 70%);
+}
 /* Indentation for tree nodes in ComponentTreeView */
 .tree-node[data-depth] {
   padding-left: calc(8px + (var(--depth, 0) * 16px));

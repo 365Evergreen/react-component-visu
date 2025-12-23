@@ -1,0 +1,8 @@
+/* ThemeGenerator color preview box */
+.theme-color-preview {
+  border: 1px solid #ccc;
+  background: var(--color-preview, #fff);
+}
+.theme-color-preview[data-color] {
+  background: attr(data-color color, color, #fff);
+}
