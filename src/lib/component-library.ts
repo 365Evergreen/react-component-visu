@@ -1,5 +1,7 @@
 import { ComponentLibraryItem } from '@/types/component';
 
+export const CONTAINER_TYPES = ['Card', 'div', 'section', 'header', 'footer', 'main', 'article', 'nav', 'aside'] as const;
+
 export const COMPONENT_LIBRARY: ComponentLibraryItem[] = [
   {
     type: 'Button',

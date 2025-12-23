@@ -13,18 +13,18 @@ This is a feature-rich visual development tool with multiple interconnected syst
 ## Essential Features
 
 ### Canvas-Based Component Builder
-- **Functionality**: Drag-and-drop interface for adding and arranging React components on a visual canvas
-- **Purpose**: Enables visual composition without code knowledge
+- **Functionality**: Drag-and-drop interface for adding and arranging React components on a visual canvas with full nesting support
+- **Purpose**: Enables visual composition without code knowledge, including complex nested component hierarchies
 - **Trigger**: Designer opens editor or creates new component
-- **Progression**: Select component from library → Drag onto canvas → Position in layout → See live preview
-- **Success criteria**: Components render accurately on canvas matching their React behavior, supports nesting and complex layouts
+- **Progression**: Select component from library → Drag onto canvas or into container → Position in layout → See live preview with nested children
+- **Success criteria**: Components render accurately on canvas matching their React behavior, supports unlimited nesting depth, visual indicators for drop zones, containers show child count
 
 ### Element Property Editor
-- **Functionality**: Right-side panel for editing props, styling, and attributes of selected elements
-- **Purpose**: Fine-tune component appearance and behavior with theme-aware controls
+- **Functionality**: Right-side panel for editing props, styling, attributes, and viewing nested children of selected elements
+- **Purpose**: Fine-tune component appearance, behavior, and structure with theme-aware controls
 - **Trigger**: Designer clicks/selects element on canvas
-- **Progression**: Select element → Property panel appears → Modify props/styles → See instant updates on canvas
-- **Success criteria**: All common props editable, changes reflect immediately, supports Tailwind classes and theme tokens
+- **Progression**: Select element → Property panel appears with tabs (Properties/Children/Events/Code) → Modify props/styles or view nested components → See instant updates on canvas
+- **Success criteria**: All common props editable, changes reflect immediately, supports Tailwind classes and theme tokens, children tab shows component hierarchy
 
 ### Interaction & State Builder
 - **Functionality**: Visual interface for defining event handlers (onClick, onChange, etc.) and component state
@@ -58,7 +58,10 @@ This is a feature-rich visual development tool with multiple interconnected syst
 
 - **Empty Canvas State**: Display engaging onboarding with suggested starter templates and quick-start guide
 - **Invalid Property Values**: Real-time validation with helpful error messages and suggested fixes
-- **Nested Component Complexity**: Visual indicators for depth, collapsible tree view for complex hierarchies
+- **Nested Component Complexity**: Visual indicators for depth with indentation, collapsible tree view for complex hierarchies, drag-and-drop zone highlighting for containers
+- **Container vs Non-Container**: Clear visual distinction between components that can contain children (Card, div, section) and those that cannot (Input, Button)
+- **Circular Nesting Prevention**: Prevent dragging a parent component into its own children to avoid infinite loops
+- **Deep Nesting Performance**: Optimize rendering for deeply nested structures with efficient reconciliation
 - **Code Generation Errors**: Clear error messages pointing to problematic elements, graceful fallbacks
 - **Lost Connection During Git Push**: Queue changes locally with retry mechanism and clear status indicators
 - **Responsive Preview**: Canvas toggles between desktop/tablet/mobile viewports to test responsive behavior

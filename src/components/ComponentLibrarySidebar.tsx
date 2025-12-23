@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 import { MagnifyingGlass, Package } from '@phosphor-icons/react';
-import { COMPONENT_LIBRARY } from '@/lib/component-library';
+import { COMPONENT_LIBRARY, CONTAINER_TYPES } from '@/lib/component-library';
 import { ComponentType } from '@/types/component';
 
 interface ComponentLibrarySidebarProps {
@@ -55,23 +56,39 @@ export function ComponentLibrarySidebar({ onComponentSelect }: ComponentLibraryS
                   {category}
                 </h3>
                 <div className="space-y-1">
-                  {components.map(comp => (
-                    <button
-                      key={comp.type}
-                      onClick={() => onComponentSelect(comp.type)}
-                      className="w-full text-left px-3 py-2 rounded-md hover:bg-secondary/50 transition-colors group"
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                          <span className="text-xs font-medium text-primary">{comp.type[0]}</span>
+                  {components.map(comp => {
+                    const isContainer = CONTAINER_TYPES.includes(comp.type as any);
+                    
+                    return (
+                      <button
+                        key={comp.type}
+                        draggable
+                        onDragStart={(e) => {
+                          e.dataTransfer.setData('componentType', comp.type);
+                          e.dataTransfer.effectAllowed = 'copy';
+                        }}
+                        onClick={() => onComponentSelect(comp.type)}
+                        className="w-full text-left px-3 py-2 rounded-md hover:bg-secondary/50 transition-colors group cursor-grab active:cursor-grabbing"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                            <span className="text-xs font-medium text-primary">{comp.type[0]}</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-medium text-sm flex items-center gap-2">
+                              {comp.type}
+                              {isContainer && (
+                                <Badge variant="outline" className="text-[10px] px-1 py-0 h-4 bg-success/10 text-success border-success/30">
+                                  Container
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="text-xs text-muted-foreground truncate">{comp.description}</div>
+                          </div>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm">{comp.type}</div>
-                          <div className="text-xs text-muted-foreground truncate">{comp.description}</div>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
+                      </button>
+                    );
+                  })}
                 </div>
                 <Separator className="mt-4" />
               </div>

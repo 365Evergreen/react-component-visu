@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { SlidersHorizontal, Lightning, Code, Copy } from '@phosphor-icons/react';
+import { SlidersHorizontal, Lightning, Code, Copy, Tree } from '@phosphor-icons/react';
 import { CanvasComponent, EventType } from '@/types/component';
 import { generateComponentCode } from '@/lib/code-generator';
+import { CONTAINER_TYPES } from '@/lib/component-library';
 import { toast } from 'sonner';
 
 interface PropertyPanelProps {
@@ -72,10 +73,11 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
       </div>
 
       <Tabs defaultValue="properties" className="flex-1 flex flex-col">
-        <TabsList className="mx-4 mt-4">
-          <TabsTrigger value="properties" className="flex-1">Properties</TabsTrigger>
-          <TabsTrigger value="interactions" className="flex-1">Interactions</TabsTrigger>
-          <TabsTrigger value="code" className="flex-1">Code</TabsTrigger>
+        <TabsList className="mx-4 mt-4 grid grid-cols-4">
+          <TabsTrigger value="properties">Properties</TabsTrigger>
+          <TabsTrigger value="children">Children</TabsTrigger>
+          <TabsTrigger value="interactions">Events</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
         </TabsList>
 
         <TabsContent value="properties" className="flex-1 mt-0">
@@ -157,6 +159,66 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
                     rows={3}
                   />
                 </div>
+              </div>
+            </div>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="children" className="flex-1 mt-0">
+          <ScrollArea className="h-full">
+            <div className="p-4 space-y-4">
+              <div>
+                <Label className="text-xs uppercase tracking-wide text-muted-foreground mb-3 block flex items-center gap-2">
+                  <Tree size={16} />
+                  Nested Components
+                </Label>
+                
+                {CONTAINER_TYPES.includes(selectedComponent.type as any) ? (
+                  <div className="space-y-3">
+                    <div className="p-3 rounded-md bg-primary/5 border border-primary/20">
+                      <p className="text-xs text-muted-foreground">
+                        This is a container component. You can drag other components into it to create nested structures.
+                      </p>
+                    </div>
+                    
+                    {selectedComponent.children && selectedComponent.children.length > 0 ? (
+                      <div>
+                        <Label className="text-sm mb-2 block">
+                          Children ({selectedComponent.children.length})
+                        </Label>
+                        <div className="space-y-2">
+                          {selectedComponent.children.map((child, index) => (
+                            <div 
+                              key={child.id} 
+                              className="p-3 rounded-md bg-secondary/50 border border-border"
+                            >
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <div className="text-sm font-medium">{child.type}</div>
+                                  <div className="text-xs text-muted-foreground mt-1">
+                                    ID: {child.id.slice(0, 8)}...
+                                  </div>
+                                </div>
+                                <div className="text-xs text-primary bg-primary/10 px-2 py-1 rounded">
+                                  #{index + 1}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="p-6 text-center text-muted-foreground text-sm border border-dashed border-border rounded-md">
+                        No nested components yet. Drag components here to nest them.
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="p-6 text-center text-muted-foreground text-sm border border-dashed border-border rounded-md">
+                    <p className="mb-2">This component cannot contain children.</p>
+                    <p className="text-xs">Try using containers like Card, div, section, or header.</p>
+                  </div>
+                )}
               </div>
             </div>
           </ScrollArea>
