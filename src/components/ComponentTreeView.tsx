@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Package, CaretDown, CaretRight, Trash } from '@phosphor-icons/react';
+import { Box20Regular, CaretDown16Regular, CaretRight16Regular, Delete16Regular } from '@fluentui/react-icons';
 import { CONTAINER_TYPES } from '@/lib/component-library';
 import { CanvasComponent } from '@/types/component';
 
@@ -20,7 +20,7 @@ export function ComponentTreeView({
     <div className="w-64 bg-card border-l border-border flex flex-col h-full">
       <div className="p-4 border-b border-border">
         <div className="flex items-center gap-2 mb-2">
-          <Package className="text-primary" size={18} />
+          <Box20Regular className="text-primary w-5 h-5" />
           <h3 className="font-semibold text-sm">Component Tree</h3>
         </div>
 
@@ -121,9 +121,9 @@ function TreeNode({ component, isSelected, selectedId, onSelect, onDelete, depth
             className="hover:bg-primary/10 rounded p-0.5 transition-colors"
           >
             {isExpanded ? (
-              <CaretDown size={14} weight="bold" />
+              <CaretDown16Regular style={{width:14,height:14}} />
             ) : (
-              <CaretRight size={14} weight="bold" />
+              <CaretRight16Regular style={{width:14,height:14}} />
             )}
           </button>
         ) : (
@@ -147,7 +147,7 @@ function TreeNode({ component, isSelected, selectedId, onSelect, onDelete, depth
           className="opacity-0 group-hover:opacity-100 hover:bg-destructive/20 hover:text-destructive p-1 rounded transition-all"
           title="Delete component"
         >
-          <Trash size={12} />
+          <Delete16Regular style={{width:12,height:12}} />
         </button>
       </div>
 

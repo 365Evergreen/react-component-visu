@@ -14,8 +14,10 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    // DO NOT REMOVE
-    createIconImportProxy() as PluginOption,
+    // NOTE: Originally this project used a phospor icon proxy plugin which attempted to provide
+    // imports for Phosphor icons. We are standardizing on Fluent UI icons and not using the proxy.
+    // The plugin was removed to avoid noisy fallback warnings from the proxy.
+    // createIconImportProxy({ fallback: false }) as PluginOption,
     sparkPlugin() as PluginOption,
   ],
   resolve: {

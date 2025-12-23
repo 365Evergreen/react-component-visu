@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FloppyDisk, Export, Eye, GitBranch, FileCode } from '@phosphor-icons/react';
+import { Code24Regular, Eye20Regular, Save24Regular, ArrowExport24Regular, Branch24Regular } from '@fluentui/react-icons';
 import { toast } from 'sonner';
 import { CanvasComponent } from '@/types/component';
 import { generateComponentCode } from '@/lib/code-generator';
@@ -78,7 +78,7 @@ export function TopToolbar({ components, onExport }: TopToolbarProps) {
       <div className="h-14 bg-card border-b border-border flex items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
-            <FileCode size={24} className="text-primary" weight="duotone" />
+            <Code24Regular className="text-primary w-6 h-6" />
             <h1 className="text-lg font-bold">ComponentForge</h1>
           </div>
         </div>
@@ -89,7 +89,7 @@ export function TopToolbar({ components, onExport }: TopToolbarProps) {
             size="sm"
             onClick={handlePreview}
           >
-            <Eye size={18} className="mr-2" />
+            <Eye20Regular className="mr-2 w-4 h-4 inline-block" />
             Preview
           </Button>
           
@@ -98,7 +98,7 @@ export function TopToolbar({ components, onExport }: TopToolbarProps) {
             size="sm"
             onClick={handleSave}
           >
-            <FloppyDisk size={18} className="mr-2" />
+            <Save24Regular className="mr-2 w-4 h-4 inline-block" />
             Save
           </Button>
 
@@ -107,7 +107,7 @@ export function TopToolbar({ components, onExport }: TopToolbarProps) {
             onClick={() => setIsExportOpen(true)}
             disabled={components.length === 0}
           >
-            <Export size={18} className="mr-2" />
+            <ArrowExport24Regular className="mr-2 w-4 h-4 inline-block" />
             Export
           </Button>
         </div>
@@ -168,7 +168,7 @@ export function TopToolbar({ components, onExport }: TopToolbarProps) {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  <GitBranch size={14} className="inline mr-1" />
+                  <Branch24Regular style={{width:14,height:14}} className="inline mr-1" />
                   Note: Git integration requires authentication
                 </p>
               </TabsContent>
