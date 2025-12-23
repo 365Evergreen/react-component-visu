@@ -35,7 +35,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_BASE: ${{ env.VITE_BASE }}
+          # Project pages are served under /react-component-visu/ on GitHub Pages.
+          # Set a fixed base so Vite emits asset URLs with the repo path.
+          VITE_BASE: '/react-component-visu/'
 
       - name: Deploy to gh-pages branch using peaceiris
         uses: peaceiris/actions-gh-pages@v3
