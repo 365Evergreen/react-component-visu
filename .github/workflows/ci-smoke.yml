@@ -31,7 +31,7 @@ jobs:
 
       - name: Start dev server in background
         run: |
-          nohup npm run dev &>/tmp/dev.log &
+          nohup npm run dev -- --port 5173 &>/tmp/dev.log &
           npx wait-on http://127.0.0.1:5173 --timeout 120000
 
       - name: Dev server smoke test
