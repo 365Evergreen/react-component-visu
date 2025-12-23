@@ -1,0 +1,33 @@
+name: Push Checks
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  push-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (allow legacy peer deps)
+        run: npm ci --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE: ${{ secrets.VITE_BASE }}
+
+      - name: Check dist index for built asset
+        run: npm run check:dist
+
+      - name: Run tests
+        run: npm test -- --run
