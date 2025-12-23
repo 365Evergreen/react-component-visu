@@ -18,6 +18,9 @@ function App() {
   const [themeTokens, setThemeTokens] = useKV<Record<string,string>>('theme-tokens', {});
   const [previewComponents, setPreviewComponents] = useState<CanvasComponent[] | null>(null);
 
+  // convenience alias for current components
+  const currentComponents = components || [];
+
   const handleAddComponent = (type: ComponentType) => {
     const libraryItem = COMPONENT_LIBRARY.find(c => c.type === type);
     if (!libraryItem) return;
@@ -235,7 +238,6 @@ function App() {
 
   useEffect(() => {
     const onLayout = (e: any) => {
-      const id = e.detail as string;
       const detail = e.detail;
 
       // If event provides components (from preview/apply), accept them
@@ -264,14 +266,9 @@ function App() {
 
     const onPreview = (e: any) => {
       const comps = e.detail as CanvasComponent[];
-      setPreviewComponents(comps ||apply-layout', onLayout as EventListener);
-    window.addEventListener('spark:preview-layout', onPreview as EventListener);
-    window.addEventListener('spark:theme-change', onTheme as EventListener);
-
-    return () => {
-      window.removeEventListener('spark:apply-layout', onLayout as EventListener);
-      window.removeEventListener('spark:preview-layout', onPreview
-      setPreviewComponents(null);
+      setPreviewComponents(comps || null);
+      toast('Previewing layout', { icon: '👁️' });
+    };
 
     const onTheme = (e: any) => {
       const tokens = e.detail as Record<string,string>;
@@ -285,7 +282,34 @@ function App() {
       }
       toast.success('Theme updated');
     };
-div className="flex-1 relative">
+
+    window.addEventListener('spark:apply-layout', onLayout as EventListener);
+    window.addEventListener('spark:preview-layout', onPreview as EventListener);
+    window.addEventListener('spark:theme-change', onTheme as EventListener);
+
+    return () => {
+      window.removeEventListener('spark:apply-layout', onLayout as EventListener);
+      window.removeEventListener('spark:preview-layout', onPreview as EventListener);
+      window.removeEventListener('spark:theme-change', onTheme as EventListener);
+      setPreviewComponents(null);
+    };
+  }, [setPageLayout, setThemeTokens]);
+
+
+
+  return (
+    <div className="h-screen flex flex-col overflow-hidden">
+      <Toaster position="top-right" theme="dark" />
+      
+      <TopToolbar 
+        components={currentComponents}
+        onExport={handleExport}
+      />
+
+      <div className="flex-1 flex overflow-hidden">
+        <ComponentLibrarySidebar onComponentSelect={handleAddComponent} />
+        
+        <div className="flex-1 relative">
           {previewComponents && (
             <div className="absolute right-4 top-4 z-20 bg-card p-3 rounded shadow-lg border border-border flex gap-2 items-center">
               <div className="text-sm">Preview active</div>
@@ -306,29 +330,7 @@ div className="flex-1 relative">
             onMoveComponent={handleMoveComponent}
             onAddComponentToContainer={handleAddComponentToContainer}
           />
-        </div
-  }, [setPageLayout, setThemeTokens]);
-
-  return (
-    <div className="h-screen flex flex-col overflow-hidden">
-      <Toaster position="top-right" theme="dark" />
-      
-      <TopToolbar 
-        components={currentComponents}
-        onExport={handleExport}
-      />
-
-      <div className="flex-1 flex overflow-hidden">
-        <ComponentLibrarySidebar onComponentSelect={handleAddComponent} />
-        
-        <CanvasArea
-          components={currentComponents}
-          selectedId={selectedId}
-          onSelectComponent={setSelectedId}
-          onDeleteComponent={handleDeleteComponent}
-          onMoveComponent={handleMoveComponent}
-          onAddComponentToContainer={handleAddComponentToContainer}
-        />
+        </div>
 
         <ComponentTreeView
           components={currentComponents}
