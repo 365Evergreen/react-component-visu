@@ -12,9 +12,11 @@ describe('ComponentLibrarySidebar', () => {
     expect(screen.getByText('Tools')).toBeTruthy();
     expect(screen.getByText('Components')).toBeTruthy();
 
+
     // Switch to Layouts
     fireEvent.click(screen.getByText('Layouts'));
-    expect(screen.getByText('Pick a page layout for full-page design')).toBeTruthy();
+    // Use regex matcher for robust text search
+    expect(screen.getByText(/pick a page layout for full-page design/i)).toBeTruthy();
 
     // Switch to Theme
     fireEvent.click(screen.getByText('Theme'));
