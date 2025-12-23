@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Settings24Regular, Flash24Regular, Code24Regular, Copy24Regular, TreeDeciduous24Regular } from '@fluentui/react-icons';
+import { Settings24Regular, Flash24Regular, Code24Regular, Copy24Regular, TreeDeciduous20Regular, DeveloperBoardLightning20Regular, Code20Regular } from '@fluentui/react-icons';
 import { CanvasComponent, EventType } from '@/types/component';
 import { generateComponentCode } from '@/lib/code-generator';
 import { CONTAINER_TYPES } from '@/lib/component-library';
@@ -253,7 +253,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
                     className="w-full justify-start"
                     onClick={() => handleAddEvent('onSubmit')}
                   >
-                    <Lightning size={16} className="mr-2" />
+                    <DeveloperBoardLightning20Regular className="mr-2 w-4 h-4 inline-block" />
                     Add onSubmit
                   </Button>
                 </div>
@@ -290,7 +290,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
                   variant="outline"
                   onClick={handleGenerateCode}
                 >
-                  <Code size={16} className="mr-2" />
+                  <Code20Regular className="mr-2 w-4 h-4 inline-block" />
                   Generate
                 </Button>
                 {generatedCode && (
