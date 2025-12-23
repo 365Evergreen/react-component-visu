@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { SlidersHorizontal, Lightning, Code, Copy, Tree } from '@phosphor-icons/react';
+import { Settings24Regular, Flash24Regular, Code24Regular, Copy24Regular, TreeDeciduous24Regular } from '@fluentui/react-icons';
 import { CanvasComponent, EventType } from '@/types/component';
 import { generateComponentCode } from '@/lib/code-generator';
 import { CONTAINER_TYPES } from '@/lib/component-library';
@@ -24,7 +24,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
     return (
       <div className="w-80 bg-card border-l border-border flex items-center justify-center">
         <div className="text-center text-muted-foreground p-6">
-          <SlidersHorizontal size={48} className="mx-auto mb-3 opacity-50" />
+          <Settings24Regular className="mx-auto mb-3 opacity-50 w-12 h-12" />
           <p className="text-sm">Select a component to edit its properties</p>
         </div>
       </div>
@@ -66,7 +66,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
     <div className="w-96 bg-card border-l border-border flex flex-col h-full">
       <div className="p-4 border-b border-border">
         <h2 className="font-semibold text-lg flex items-center gap-2">
-          <SlidersHorizontal size={20} className="text-primary" />
+          <Settings24Regular className="text-primary w-5 h-5 inline-block" />
           {selectedComponent.type}
         </h2>
         <p className="text-xs text-muted-foreground mt-1">ID: {selectedComponent.id.slice(0, 8)}</p>
@@ -169,7 +169,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
             <div className="p-4 space-y-4">
               <div>
                 <Label className="text-xs uppercase tracking-wide text-muted-foreground mb-3 block flex items-center gap-2">
-                  <Tree size={16} />
+                  <TreeDeciduous20Regular className="inline-block mr-1 w-4 h-4" />
                   Nested Components
                 </Label>
                 
@@ -237,7 +237,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
                     className="w-full justify-start"
                     onClick={() => handleAddEvent('onClick')}
                   >
-                    <Lightning size={16} className="mr-2" />
+                    <Flash24Regular className="mr-2 w-4 h-4 inline-block" />
                     Add onClick
                   </Button>
                   <Button
@@ -245,7 +245,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
                     className="w-full justify-start"
                     onClick={() => handleAddEvent('onChange')}
                   >
-                    <Lightning size={16} className="mr-2" />
+                    <Code24Regular className="mr-2 w-4 h-4 inline-block" />
                     Add onChange
                   </Button>
                   <Button
@@ -298,7 +298,7 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
                     size="sm"
                     onClick={handleCopyCode}
                   >
-                    <Copy size={16} className="mr-2" />
+                    <Copy24Regular className="mr-2 w-4 h-4 inline-block" />
                     Copy
                   </Button>
                 )}

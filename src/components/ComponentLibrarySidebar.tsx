@@ -5,7 +5,7 @@ import { ThemeDesigner } from './ThemeDesigner';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { MagnifyingGlass, Package } from '@phosphor-icons/react';
+import { Search16Regular, Box20Regular } from '@fluentui/react-icons';
 import { COMPONENT_LIBRARY, CONTAINER_TYPES } from '@/lib/component-library';
 import { ComponentType } from '@/types/component';
 
@@ -37,7 +37,7 @@ export function ComponentLibrarySidebar({ onComponentSelect }: ComponentLibraryS
   return (
     <div className="w-72 bg-card border-r border-border flex flex-col h-full">
       <div className="p-3 border-b border-border flex items-center gap-3">
-        <Package className="text-primary" size={20} weight="duotone" />
+        <Box20Regular className="text-primary w-5 h-5" />
         <h2 className="font-semibold text-base">Tools</h2>
         <div className="ml-auto flex gap-1">
           <button className={`px-3 py-1 rounded ${activeTab === 'components' ? 'bg-accent text-accent-foreground' : 'hover:bg-secondary/50'}`} onClick={() => setActiveTab('components')}>Components</button>
@@ -49,7 +49,7 @@ export function ComponentLibrarySidebar({ onComponentSelect }: ComponentLibraryS
       {activeTab === 'components' && (
         <div className="p-3 flex-1 overflow-auto">
           <div className="relative mb-3">
-            <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+            <Search16Regular className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
               placeholder="Search components..."
               value={searchQuery}
