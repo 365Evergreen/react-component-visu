@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+# Trigger redeploy: touch to force workflow run
+
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    env:
+      # Optionally set VITE_BASE for project site deployments (e.g. /your-repo-name/).
+      # You can set this as a Repository Secret named `VITE_BASE` or as an Environment variable.
+      VITE_BASE: ${{ secrets.VITE_BASE }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies (install all, allow legacy peer deps)
+        run: npm install --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+        env:
+          # Project pages are served under /react-component-visu/ on GitHub Pages.
+          # Set a fixed base so Vite emits asset URLs with the repo path.
+          VITE_BASE: '/react-component-visu/'
+
+      - name: Deploy to gh-pages branch using peaceiris
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
