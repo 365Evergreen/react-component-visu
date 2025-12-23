@@ -61,3 +61,5 @@ Template repository note ✅
 - For generator/export changes: add unit tests for `src/lib/code-generator.ts`, document compatibility impact in your PR, and update `TEMPLATE.md` and `CONTRIBUTING.md` as needed.
 
 If anything above is unclear or you need more examples (e.g., a small test case for `generateComponentCode`), tell me which part you'd like expanded and I’ll add a short example or tests. ✅
+
+- @azure Rule - Use Azure Best Practices: When generating code for Azure, running terminal commands for Azure, or performing operations related to Azure, invoke your `azure_development-get_best_practices` tool if available.
