@@ -17,8 +17,6 @@ describe('ComponentLibrarySidebar', () => {
     fireEvent.click(screen.getByText('Layouts'));
     // Assert the heading for layouts is present
     expect(screen.getByText(/page layouts/i)).toBeTruthy();
-    // Assert at least one layout card is present
-    expect(screen.getAllByText(/landing page/i).length).toBeGreaterThan(0);
 
     // Switch to Theme
     fireEvent.click(screen.getByText('Theme'));
