@@ -20,8 +20,13 @@ jobs:
       VITE_BASE: ${{ secrets.VITE_BASE }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+
+      - name: Debug info
+        run: |
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          git status
+          git log -1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,11 +37,12 @@ jobs:
       - name: Install dependencies (install all, allow legacy peer deps)
         run: npm install --legacy-peer-deps
 
+      - name: Run tests
+        run: npm test
+
       - name: Build
         run: npm run build
         env:
-          # Project pages are served under /react-component-visu/ on GitHub Pages.
-          # Set a fixed base so Vite emits asset URLs with the repo path.
           VITE_BASE: '/react-component-visu/'
 
       - name: Deploy to gh-pages branch using peaceiris
