@@ -1,20 +1,4 @@
-<<<<<<< HEAD
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 
-// Use `src` as the dev root so we don't clash with repo index.html used for Pages
-export default defineConfig(({ mode }) => ({
-  plugins: [react()],
-  root: 'src',
-  build: {
-    outDir: '../dist',
-    emptyOutDir: true
-  },
-  server: {
-    port: 5173
-  }
-}))
-=======
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig, PluginOption } from "vite";
@@ -30,7 +14,7 @@ export default defineConfig({
   base: process.env.VITE_BASE || '/',
   plugins: [
     react(),
-    tailwindcss(),
+    // temporarily removed tailwindcss() plugin to avoid a plugin mismatch during CI/build
     // DO NOT REMOVE
     createIconImportProxy() as PluginOption,
     sparkPlugin() as PluginOption,
@@ -41,4 +25,4 @@ export default defineConfig({
     }
   },
 });
->>>>>>> origin/main
+

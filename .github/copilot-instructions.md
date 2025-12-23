@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Copilot Instructions (project-specific additions)
 
 This project uses a Vite + React 19 + TypeScript setup for a visual builder. Important notes for Copilot agents working in this repo:
@@ -17,7 +16,6 @@ Testing:
 - Use `vitest` and `@testing-library/react`. Add tests for theme persistence and sidebar collapse behavior.
 
 When preparing a PR, include a brief README entry describing any developer scripts added (`npm run dev`, `npm run build`, `npm run test`).
-=======
 # Copilot / AI Agent Instructions — react-component-visu
 
 ## Quick orientation
@@ -157,4 +155,4 @@ When preparing a PR, include a brief README entry describing any developer scrip
 ---
 
 If anything above is unclear or you'd like the file to include a different example or more test templates, tell me which area to expand and I’ll iterate. ✅
->>>>>>> origin/main
+

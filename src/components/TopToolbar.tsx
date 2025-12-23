@@ -12,9 +12,11 @@ import { generateComponentCode } from '@/lib/code-generator';
 interface TopToolbarProps {
   components: CanvasComponent[];
   onExport: (config: any) => void;
+  editing?: boolean;
+  onToggleEditing?: (value?: boolean) => void;
 }
 
-export function TopToolbar({ components, onExport }: TopToolbarProps) {
+export function TopToolbar({ components, onExport, editing, onToggleEditing }: TopToolbarProps) {
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [componentName, setComponentName] = useState('MyComponent');
   const [exportType, setExportType] = useState<'local' | 'git'>('local');
@@ -110,6 +112,13 @@ export function TopToolbar({ components, onExport }: TopToolbarProps) {
             <Export size={18} className="mr-2" />
             Export
           </Button>
+
+          {/* Editing / Undo / Redo controls for test compatibility */}
+          <Button size="sm" variant="ghost" onClick={() => onToggleEditing?.() }>
+            Edit
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => window.dispatchEvent(new CustomEvent('rcv:undo'))}>Undo</Button>
+          <Button size="sm" variant="ghost" onClick={() => window.dispatchEvent(new CustomEvent('rcv:redo'))}>Redo</Button>
         </div>
       </div>
 

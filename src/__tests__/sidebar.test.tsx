@@ -1,14 +1,14 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import Sidebar from '../components/Sidebar'
 import React from 'react'
 
-test('sidebar toggles collapse and stores state', ()=>{
+test('sidebar toggles collapse and stores state', async ()=>{
   localStorage.clear()
-  const { getByText } = render(<Sidebar side="left">Content</Sidebar>)
+  const { getByText, findByText } = render(<Sidebar side="left">Content</Sidebar>)
   const btn = getByText('Collapse') as HTMLButtonElement
   expect(btn).toBeTruthy()
-  btn.click()
+  fireEvent.click(btn)
   // after click, button text should be Open
-  expect(getByText('Open')).toBeTruthy()
+  await findByText('Open')
   expect(JSON.parse(localStorage.getItem('rcv:sidebar:left')||'false')).toBe(true)
 })
