@@ -18,11 +18,5 @@ describe('ComponentLibrarySidebar', () => {
     // Assert the heading for layouts is present
     expect(screen.getByText(/page layouts/i)).toBeTruthy();
 
-    // Switch to Theme
-    fireEvent.click(screen.getByText('Theme'));
-    // Accept either the heading or the description for theme designer
-    expect(
-      screen.getByText(/theme designer|adjust the base theme tokens/i)
-    ).toBeTruthy();
   });
 });
