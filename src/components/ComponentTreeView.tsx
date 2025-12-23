@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { 
-  Package,
-  CaretRight, 
-  CaretDown, 
-  Trash,
-} from '@phosphor-icons/react';
+import { Package, CaretDown, CaretRight, Trash } from '@phosphor-icons/react';
 import { CONTAINER_TYPES } from '@/lib/component-library';
 import { CanvasComponent } from '@/types/component';
 
@@ -16,19 +10,20 @@ interface ComponentTreeViewProps {
   onDeleteComponent: (id: string) => void;
 }
 
-export function ComponentTreeView({ 
-  components, 
+export function ComponentTreeView({
+  components,
   selectedId,
   onSelectComponent,
   onDeleteComponent,
 }: ComponentTreeViewProps) {
   return (
-    <div className="w-64 bg-card border-l border-border flex flex-col">
+    <div className="w-64 bg-card border-l border-border flex flex-col h-full">
       <div className="p-4 border-b border-border">
         <div className="flex items-center gap-2 mb-2">
-          <Package size={18} className="text-primary" />
+          <Package className="text-primary" size={18} />
           <h3 className="font-semibold text-sm">Component Tree</h3>
         </div>
+
         {components.length === 0 ? (
           <div className="mt-4">
             <p className="text-sm text-muted-foreground">
@@ -66,51 +61,44 @@ interface TreeNodeProps {
   depth: number;
 }
 
-function TreeNode({ 
-  component, 
-  selectedId,
-  isSelected,
-  onSelect,
-  onDelete,
-  depth,
-}: TreeNodeProps) {
+function TreeNode({ component, isSelected, selectedId, onSelect, onDelete, depth }: TreeNodeProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const hasChildren = component.children && component.children.length > 0;
+  const hasChildren = (component.children || []).length > 0;
 
   const iconMap: Record<string, string> = {
-    'Button': '🔘',
-    'Input': '📝',
-    'Card': '🃏',
-    'div': '📦',
-    'section': '📄',
-    'header': '🎯',
-    'footer': '📍',
-    'main': '🏠',
-    'article': '📰',
-    'nav': '🧭',
-    'aside': '🚪',
-    'p': '¶',
-    'h1': 'H1',
-    'h2': 'H2',
-    'h3': 'H3',
-    'span': '⊕',
-    'Label': '🏷️',
-    'Checkbox': '☑️',
-    'Switch': '🔄',
-    'Select': '🔽',
-    'Textarea': '📃',
-    'Badge': '🔖',
-    'Alert': '⚠️',
-    'Dialog': '🗨️',
-    'Separator': '➖',
-    'Progress': '📊',
-    'Slider': '🎚️',
-    'Table': '📋',
-    'Tabs': '📑',
-    'Avatar': '👤',
-    'Accordion': '▼',
-    'ScrollArea': '📜',
-    'Tooltip': '💬',
+    Button: '🔘',
+    Input: '📝',
+    Card: '🃏',
+    div: '📦',
+    section: '📄',
+    header: '🎯',
+    footer: '📍',
+    main: '🏠',
+    article: '📰',
+    nav: '🧭',
+    aside: '🚪',
+    p: '¶',
+    h1: 'H1',
+    h2: 'H2',
+    h3: 'H3',
+    span: '⊕',
+    Label: '🏷️',
+    Checkbox: '☑️',
+    Switch: '🔄',
+    Select: '🔽',
+    Textarea: '📃',
+    Badge: '🔖',
+    Alert: '⚠️',
+    Dialog: '🗨️',
+    Separator: '➖',
+    Progress: '📊',
+    Slider: '🎚️',
+    Table: '📋',
+    Tabs: '📑',
+    Avatar: '👤',
+    Accordion: '▼',
+    ScrollArea: '📜',
+    Tooltip: '💬',
   };
 
   const isContainer = CONTAINER_TYPES.includes(component.type as any);
@@ -119,10 +107,9 @@ function TreeNode({
     <div>
       <div
         onClick={() => onSelect(component.id)}
-        className={`
-          group flex items-center gap-1 px-2 py-1.5 rounded cursor-pointer hover:bg-accent/50 transition-colors
-          ${isSelected ? 'bg-accent text-accent-foreground' : ''}
-        `}
+        className={`group flex items-center gap-1 px-2 py-1.5 rounded cursor-pointer hover:bg-accent/50 transition-colors ${
+          isSelected ? 'bg-accent text-accent-foreground' : ''
+        }`}
         style={{ paddingLeft: `${depth * 16 + 8}px` }}
       >
         {hasChildren ? (
@@ -140,17 +127,18 @@ function TreeNode({
             )}
           </button>
         ) : (
-          <div className="w-[22px]" />
+          <div className="w-5" />
         )}
+
+        <div className="w-[22px]" />
+
         <span className="text-sm mr-1">{iconMap[component.type] || '📦'}</span>
-        <span className="text-xs font-medium flex-1 truncate">
-          {component.type}
-        </span>
+        <span className="text-xs font-medium flex-1 truncate">{component.type}</span>
+
         {isContainer && (
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-success/15 text-success">
-            container
-          </span>
+          <span className="text-[10px] px-1.5 py-0.5 rounded bg-success/15 text-success">container</span>
         )}
+
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -162,6 +150,7 @@ function TreeNode({
           <Trash size={12} />
         </button>
       </div>
+
       {hasChildren && isExpanded && (
         <div className="mt-0.5">
           {component.children.map((child) => (

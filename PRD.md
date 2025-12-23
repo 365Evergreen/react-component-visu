@@ -1,6 +1,8 @@
 # Planning Guide
 
-A visual React component builder that bridges design and code, enabling designers to create production-ready components through an intuitive drag-and-drop interface with real-time TypeScript generation.
+A visual React component and page builder that bridges design and code, enabling designers to create production-ready app pages through an intuitive drag-and-drop interface with real-time TypeScript generation.
+
+Use of WYSIWYG capabilities will drastically reduce development time, by giving developers ready-to-go code as a starter for the project.
 
 **Experience Qualities**: 
 1. **Professional** - The tool should feel like a robust IDE-meets-Figma experience that inspires confidence in the generated output
