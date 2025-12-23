@@ -27,8 +27,8 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - name: Install dependencies (production-only)
-        run: npm ci --omit=dev
+      - name: Install dependencies (install all, allow legacy peer deps)
+        run: npm ci --legacy-peer-deps
 
       - name: Build
         run: npm run build
