@@ -2,64 +2,60 @@
 
 Quick orientation
 - Purpose: Visual React page/component builder (drag/drop canvas) that generates TypeScript React components (see `src/lib/code-generator.ts`).
-- Stack: Vite + React + TypeScript + Tailwind; local workspace package `packages/spark-tools` provides plugins/hooks used at runtime.
+- Stack: Vite + React + TypeScript + Tailwind. This template is stable — changes to the generator or core types need tests and migration notes.
 
 Quick commands (root)
-- Start dev server: `npm run dev` (Vite)
+- Install: `npm ci` (or `npm install`) to restore deps.
+- Dev: `npm run dev` (vite)
 - Build: `npm run build` (runs `tsc -b --noCheck && vite build`)
-- Preview build: `npm run preview`
-- Free up port 5000: `npm run kill` (kills 5000/tcp)
+- Preview built site: `npm run preview`
+- Kill dev port (5000): `npm run kill` (runs `fuser -k 5000/tcp`)
+- Tests: `npm run test` (vitest, jsdom environment; see `vitest.config.ts`)
 - Lint: `npm run lint`
-- Run package tests: `cd packages/spark-tools && npm test`
+- Deploy (gh-pages): `npm run predeploy` then `npm run deploy` (uses `gh-pages -d dist`)
 
 Where to look (key files)
-- `src/App.tsx` — app orchestration, KV-backed canvas state keys: `canvas-components`, `export-history`.
-- `src/lib/code-generator.ts` — how visual model -> TSX code is generated (imports, state hooks, events).
-- `src/lib/component-library.ts` — canonical list of library items and `CONTAINER_TYPES` (used for nesting rules and UI badges).
-- `src/types/component.ts` — canonical types for components/events/exports (source of truth for shape of the canvas model).
-- `src/components/ui/*` — UI primitives the generator imports from (file names are **lowercased**; exported component names are PascalCase, e.g. `button.tsx` -> `Button`).
-- `src/components/*` — canvas, tree, property editor, toolbar components implementing the editor UX.
-- `vite.config.ts` — important plugins: `createIconImportProxy()` (DO NOT REMOVE), `sparkPlugin()`; also uses `PROJECT_ROOT` to resolve `@` alias.
-- `tailwind.config.js` + `theme.json` — theme uses CSS variables and can be customized.
+- `src/App.tsx` — orchestration and persistence. Key `useKV` keys: `canvas-components`, `export-history`, `page-layout`, `theme-tokens` (used for preview/apply operations and persisted app state).
+- `src/lib/code-generator.ts` — rules for generating TSX: 1) imports: UI components are imported from `@/components/ui/<lowercase>`, 2) `isUIComponent` lists components considered UI primitives, 3) events -> state mapping (e.g., `setState` generates `useState` + handler).
+- `src/lib/component-library.ts` — `COMPONENT_LIBRARY` & `CONTAINER_TYPES` control available components, default props, and nesting rules.
+- `src/types/component.ts` — canonical model: `CanvasComponent`, `ComponentEvent`, `EventType`, `ComponentLibraryItem` (source of truth; change carefully).
+- `src/components/ui/*` — UI primitives: filenames are lowercase (e.g., `button.tsx`) and export PascalCase (e.g., `Button`) used by generator.
+- `src/components/*` — editor UI (CanvasArea, Sidebar, PropertyPanel, etc.).
+- `vite.config.ts` — DO NOT REMOVE `createIconImportProxy()` or `sparkPlugin()`; also uses `PROJECT_ROOT` env var when resolving `@`.
+- `tailwind.config.js` + `theme.json` — theme tokens are applied as CSS variables.
 
-Project-specific conventions to preserve
-- Module alias: `@/*` -> `src/*` (defined in `tsconfig.json` and `vite.config.ts`). Keep imports using `@/…`.
-- UI component file naming: files under `src/components/ui` are lowercased and imported by the code generator with `comp.toLowerCase()` — if you add a UI component, ensure filename matches this convention and add the component to `isUIComponent` in `code-generator.ts` when the generator should import it.
-- Event/state pattern: events with `action: 'setState'` map to `useState` declarations in generated code. Event target names are capitalized to derive setter names (`myState` -> `setMyState`). Follow the existing event shape in `src/types/component.ts`.
-- Container types (nesting): `CONTAINER_TYPES` list in `component-library.ts` determines which library items can accept children; maintain consistency there when adding containers.
-- Persistent state: the app uses `useKV` from `@github/spark/hooks` for simple persistence; keys are strings and used directly (e.g., `canvas-components`).
+Event and integration notes
+- Window events used by the editor:
+  - `spark:apply-layout` — payload is either an array of `CanvasComponent` (applies layout) or a layout id string (uses `getLayoutComponents`).
+  - `spark:preview-layout` — payload is an array of `CanvasComponent` to preview.
+  - `spark:theme-change` — payload is `{ [tokenName]: value }`; handler writes tokens to `document.documentElement` and persists via `useKV`.
+- Persistence: `useKV` from `@github/spark/hooks` stores simple state (strings/objects). Key names are literals in `App.tsx`.
 
-Sidebar features
-- The left sidebar (Tools) now includes three tabs: **Components** (collapsible tree view grouped by category), **Layouts** (page layout picker for full-page design), and **Theme** (live theme token editor that applies CSS variables and can export `theme.json`).
-- Layout changes emit `spark:select-layout` events; theme changes emit `spark:theme-change` events so other parts of the app (like `App.tsx`) can react.
-- If you modify the sidebar or add new layout presets, update `src/components/PageLayoutPicker.tsx` and ensure any new theme token keys are applied consistently in `ThemeDesigner.tsx`.
+Project-specific conventions
+- Module alias: `@` -> `src` (configured in `tsconfig.json`, `vite.config.ts`, and `vitest.config.ts`) — always prefer `@/` imports.
+- UI files: save UI primitives under `src/components/ui/<lowercase>.tsx` and add to generator `isUIComponent` list when needed.
+- State & events: `ComponentEvent { action: 'setState', target: 'name' }` -> `const [name, setName] = useState('')` and `onChange={(e) => setName(e.target.value)}` in generated code.
+- Container types: only values in `CONTAINER_TYPES` should be treated as containers for nesting.
 
-Integration & plugin notes
-- `packages/spark-tools` contains the local `@github/spark` package (plugins, hooks). If you modify plugin behavior, add/adjust tests in that package and update exports in its `package.json`.
-- Icon imports are proxied via `createIconImportProxy()` — do not remove or replace unless you understand the Phosphor icon proxy behavior.
+Testing & changing generator code
+- Tests run with `npm run test` (vitest, jsdom). Example generator test located at `src/lib/__tests__/code-generator.test.ts` — it asserts import lines and generated `useState` declarations.
+- When changing code generation or `src/types/component.ts`:
+  - Add unit tests in `src/lib/__tests__` and run `npm run test`.
+  - Run `npm run lint` and `npm run build` to catch TypeScript and bundling issues.
+  - Include a migration note in PRs for downstream projects.
 
-How to make common changes (examples)
-- Add a new UI primitive:
-  1. Add `src/components/ui/<lowercase>.tsx` exporting a PascalCase component.
-  2. Add the type to `src/types/component.ts` if needed.
-  3. Add an entry to `src/lib/component-library.ts` (type, defaultProps, category, icon).
-  4. If the code generator must import it, add the name to `isUIComponent` in `src/lib/code-generator.ts`.
-  5. Run `npm run lint` and `npm run build`.
+Local tooling note
+- The template mentions `packages/spark-tools` (local `@github/spark` plugin/hooks) in some forks; this repo may or may not include it. If present, run its tests (`cd packages/spark-tools && npm test`) and update exports there when changing plugin behavior.
 
-Common pitfalls and troubleshooting
-- Aliases failing in other environments: ensure `PROJECT_ROOT` is set or run Vite from project root (vite resolves `@` using `PROJECT_ROOT`).
-- Port conflicts when previewing: use `npm run kill` to free port 5000.
-- When updating generator logic, unit-test the generator with representative `CanvasComponent` inputs and inspect the output for import and state correctness.
+Safety & integration warnings
+- **DO NOT** remove `createIconImportProxy()` or `sparkPlugin()` from `vite.config.ts` without validating icon imports and the dev build.
+- Keep `src/types/component.ts` authoritative. Large schema changes should include tests and a PR migration note.
 
-Safety for automated edits
-- Avoid changing `createIconImportProxy()` usage or `sparkPlugin()` in `vite.config.ts` without testing icon imports and the dev build.
-- Keep `src/types/component.ts` authoritative; refactor there first and update consumers (`code-generator.ts`, UI files, component library).
+Short examples
+- Add UI primitive:
+  1. `src/components/ui/<lowercase>.tsx` export `function MyComp(){}`
+  2. Add `MyComp` type/entry in `src/lib/component-library.ts`
+  3. If generator must import it, add `MyComp` to `isUIComponent` in `src/lib/code-generator.ts`
+  4. Add unit tests in `src/lib/__tests__` and run `npm run test`
 
-Template repository note ✅
-- This repository is maintained as a **stable starter template** (baseline components, pages, and themes) intended to be cloned or used as a GitHub Template for new projects.
-- Prefer stability over continuous changes: avoid adding features that encourage frequent live exports or unstable breaking changes. Large or breaking changes should include a migration note in the PR and tests where appropriate.
-- For generator/export changes: add unit tests for `src/lib/code-generator.ts`, document compatibility impact in your PR, and update `TEMPLATE.md` and `CONTRIBUTING.md` as needed.
-
-If anything above is unclear or you need more examples (e.g., a small test case for `generateComponentCode`), tell me which part you'd like expanded and I’ll add a short example or tests. ✅
-
-- @azure Rule - Use Azure Best Practices: When generating code for Azure, running terminal commands for Azure, or performing operations related to Azure, invoke your `azure_development-get_best_practices` tool if available.
+If anything is unclear or you want additional examples (small generated code samples or test templates), tell me which part to expand and I’ll add a concise example or test. ✅
