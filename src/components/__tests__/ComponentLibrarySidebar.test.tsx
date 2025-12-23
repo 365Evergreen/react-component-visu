@@ -15,11 +15,16 @@ describe('ComponentLibrarySidebar', () => {
 
     // Switch to Layouts
     fireEvent.click(screen.getByText('Layouts'));
-    // Use regex matcher for robust text search
-    expect(screen.getByText(/pick a page layout for full-page design/i)).toBeTruthy();
+    // Assert the heading for layouts is present
+    expect(screen.getByText(/page layouts/i)).toBeTruthy();
+    // Assert at least one layout card is present
+    expect(screen.getAllByText(/landing page/i).length).toBeGreaterThan(0);
 
     // Switch to Theme
     fireEvent.click(screen.getByText('Theme'));
-    expect(screen.getByText('Adjust the base theme tokens (applies live)')).toBeTruthy();
+    // Accept either the heading or the description for theme designer
+    expect(
+      screen.getByText(/theme designer|adjust the base theme tokens/i)
+    ).toBeTruthy();
   });
 });

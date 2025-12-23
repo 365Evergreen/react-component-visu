@@ -1,0 +1,22 @@
+﻿2025-12-23T18:37:59.2358244Z ##[group]Run actions/setup-node@v4
+2025-12-23T18:37:59.2358864Z with:
+2025-12-23T18:37:59.2359245Z   node-version: 20
+2025-12-23T18:37:59.2359656Z   cache: npm
+2025-12-23T18:37:59.2360042Z   always-auth: false
+2025-12-23T18:37:59.2360461Z   check-latest: false
+2025-12-23T18:37:59.2361206Z   token: ***
+2025-12-23T18:37:59.2361603Z ##[endgroup]
+2025-12-23T18:37:59.4218558Z Found in cache @ /opt/hostedtoolcache/node/20.19.6/x64
+2025-12-23T18:37:59.4225881Z ##[group]Environment details
+2025-12-23T18:37:59.7931995Z node: v20.19.6
+2025-12-23T18:37:59.7933199Z npm: 10.8.2
+2025-12-23T18:37:59.7933764Z yarn: 1.22.22
+2025-12-23T18:37:59.7935199Z ##[endgroup]
+2025-12-23T18:37:59.7956745Z [command]/opt/hostedtoolcache/node/20.19.6/x64/bin/npm config get cache
+2025-12-23T18:37:59.9282090Z /home/runner/.npm
+2025-12-23T18:38:00.1094324Z Cache hit for: node-cache-Linux-x64-npm-1e2ace693a078028766e8b9b4648a80e1fc62148487d15cb29fec8c3457917af
+2025-12-23T18:38:01.1736700Z Received 111876920 of 111876920 (100.0%), 110.9 MBs/sec
+2025-12-23T18:38:01.1737802Z Cache Size: ~107 MB (111876920 B)
+2025-12-23T18:38:01.1773467Z [command]/usr/bin/tar -xf /home/runner/work/_temp/3f364125-ea40-414a-bb0b-1a41c2d8edc7/cache.tzst -P -C /home/runner/work/react-component-visu/react-component-visu --use-compress-program unzstd
+2025-12-23T18:38:01.4456958Z Cache restored successfully
+2025-12-23T18:38:01.4674463Z Cache restored from key: node-cache-Linux-x64-npm-1e2ace693a078028766e8b9b4648a80e1fc62148487d15cb29fec8c3457917af

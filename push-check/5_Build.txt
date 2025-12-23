@@ -1,0 +1,77 @@
+﻿2025-12-23T18:38:13.4800678Z ##[group]Run npm run build
+2025-12-23T18:38:13.4800995Z [36;1mnpm run build[0m
+2025-12-23T18:38:13.4837376Z shell: /usr/bin/bash -e {0}
+2025-12-23T18:38:13.4837619Z env:
+2025-12-23T18:38:13.4837784Z   VITE_BASE: 
+2025-12-23T18:38:13.4837971Z ##[endgroup]
+2025-12-23T18:38:13.5937431Z 
+2025-12-23T18:38:13.5937932Z > spark-template@0.0.0 build
+2025-12-23T18:38:13.5938644Z > tsc -b --noCheck && vite build
+2025-12-23T18:38:13.5938900Z 
+2025-12-23T18:38:16.1741793Z [icon-proxy] Checking for exports in directory: /home/runner/work/react-component-visu/react-component-visu/node_modules/@phosphor-icons/react
+2025-12-23T18:38:16.1743769Z [icon-proxy] Could not find any index files for @phosphor-icons/react
+2025-12-23T18:38:16.1756789Z [36mvite v7.2.6 [32mbuilding client environment for production...[36m[39m
+2025-12-23T18:38:16.2337635Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.2410408Z transforming...
+2025-12-23T18:38:16.2497390Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.2699413Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.2707701Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7204811Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7206330Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7210757Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7215006Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7220624Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7222144Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7353893Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7358125Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:16.7627024Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:17.8550106Z Found 3 warnings while optimizing generated CSS:
+2025-12-23T18:38:17.8550648Z 
+2025-12-23T18:38:17.8553329Z Issue #1:
+2025-12-23T18:38:17.8554254Z [2m│   .container {[22m
+2025-12-23T18:38:17.8554796Z [2m│     width: 100%;[22m
+2025-12-23T18:38:17.8555621Z [2m│[22m     @media (width >= (display-mode: standalone)) {
+2025-12-23T18:38:17.8556698Z [2m┆[22m                     [33m[2m^--[22m Unexpected token ParenthesisBlock[39m
+2025-12-23T18:38:17.8557433Z [2m┆[22m
+2025-12-23T18:38:17.8558046Z [2m│       max-width: (display-mode: standalone);[22m
+2025-12-23T18:38:17.8558609Z [2m│     }[22m
+2025-12-23T18:38:17.8558818Z 
+2025-12-23T18:38:17.8558958Z Issue #2:
+2025-12-23T18:38:17.8559566Z [2m│       max-width: (display-mode: standalone);[22m
+2025-12-23T18:38:17.8560121Z [2m│     }[22m
+2025-12-23T18:38:17.8560746Z [2m│[22m     @media (width >= (pointer: coarse)) {
+2025-12-23T18:38:17.8562006Z [2m┆[22m                     [33m[2m^--[22m Unexpected token ParenthesisBlock[39m
+2025-12-23T18:38:17.8562702Z [2m┆[22m
+2025-12-23T18:38:17.8563244Z [2m│       max-width: (pointer: coarse);[22m
+2025-12-23T18:38:17.8563756Z [2m│     }[22m
+2025-12-23T18:38:17.8563960Z 
+2025-12-23T18:38:17.8564087Z Issue #3:
+2025-12-23T18:38:17.8564614Z [2m│       max-width: (pointer: coarse);[22m
+2025-12-23T18:38:17.8565125Z [2m│     }[22m
+2025-12-23T18:38:17.8565693Z [2m│[22m     @media (width >= (pointer: fine)) {
+2025-12-23T18:38:17.8566659Z [2m┆[22m                     [33m[2m^--[22m Unexpected token ParenthesisBlock[39m
+2025-12-23T18:38:17.8567319Z [2m┆[22m
+2025-12-23T18:38:17.8567838Z [2m│       max-width: (pointer: fine);[22m
+2025-12-23T18:38:17.8568345Z [2m│     }[22m
+2025-12-23T18:38:17.8568537Z 
+2025-12-23T18:38:18.0009313Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0014259Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0018923Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0021398Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0025369Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0046924Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0047939Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0048907Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0049864Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0050779Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:18.0051918Z [icon-proxy] Warning: Fallback icon not found. Not proxying any icons
+2025-12-23T18:38:20.4820655Z [32m✓[39m 1889 modules transformed.
+2025-12-23T18:38:20.8054598Z rendering chunks...
+2025-12-23T18:38:20.8192150Z Emitted proxy files to build output
+2025-12-23T18:38:20.8283998Z computing gzip size...
+2025-12-23T18:38:20.8427928Z [2mdist/[22m[32mpackage.json               [39m[1m[2m    0.26 kB[22m[1m[22m[2m │ gzip:   0.18 kB[22m
+2025-12-23T18:38:20.8429483Z [2mdist/[22m[32mindex.html                 [39m[1m[2m    0.73 kB[22m[1m[22m[2m │ gzip:   0.42 kB[22m
+2025-12-23T18:38:20.8430784Z [2mdist/[22m[32mproxy.js                   [39m[1m[2m1,568.41 kB[22m[1m[22m
+2025-12-23T18:38:20.8432531Z [2mdist/[22m[2massets/[22m[35mindex-gDclnViG.css  [39m[1m[2m  356.68 kB[22m[1m[22m[2m │ gzip:  66.20 kB[22m
+2025-12-23T18:38:20.8433993Z [2mdist/[22m[2massets/[22m[36mindex-DTg3NRrQ.js   [39m[1m[2m  427.13 kB[22m[1m[22m[2m │ gzip: 134.32 kB[22m
+2025-12-23T18:38:20.8434594Z [32m✓ built in 4.63s[39m

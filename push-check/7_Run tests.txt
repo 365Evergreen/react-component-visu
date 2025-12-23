@@ -1,0 +1,429 @@
+﻿2025-12-23T18:38:21.0575271Z ##[group]Run npm test -- --run
+2025-12-23T18:38:21.0575589Z [36;1mnpm test -- --run[0m
+2025-12-23T18:38:21.0609009Z shell: /usr/bin/bash -e {0}
+2025-12-23T18:38:21.0609257Z ##[endgroup]
+2025-12-23T18:38:21.1852619Z 
+2025-12-23T18:38:21.1853278Z > spark-template@0.0.0 test
+2025-12-23T18:38:21.1853909Z > vitest --run
+2025-12-23T18:38:21.1854154Z 
+2025-12-23T18:38:21.4985901Z 
+2025-12-23T18:38:21.4989220Z [1m[46m RUN [49m[22m [36mv3.2.4 [39m[90m/home/runner/work/react-component-visu/react-component-visu[39m
+2025-12-23T18:38:21.4990043Z 
+2025-12-23T18:38:22.6669427Z  [32m✓[39m src/lib/__tests__/code-generator.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+2025-12-23T18:38:23.1663246Z  [32m✓[39m src/components/__tests__/PageLayoutPicker.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 78[2mms[22m[39m
+2025-12-23T18:38:23.8478613Z  [32m✓[39m src/components/__tests__/ThemeDesigner.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 52[2mms[22m[39m
+2025-12-23T18:38:27.5229752Z  [31m❯[39m src/components/__tests__/ComponentLibrarySidebar.test.tsx [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 88[2mms[22m[39m
+2025-12-23T18:38:27.5232460Z [31m   [31m×[31m ComponentLibrarySidebar[2m > [22mrenders tabs and switches to layouts and theme[39m[32m 87[2mms[22m[39m
+2025-12-23T18:38:27.5234906Z [31m     → Unable to find an element with the text: /pick a page layout for full-page design/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+2025-12-23T18:38:27.5235862Z 
+2025-12-23T18:38:27.5236042Z Ignored nodes: comments, script, style
+2025-12-23T18:38:27.5236348Z [36m<body>[31m
+2025-12-23T18:38:27.5236569Z   [36m<div>[31m
+2025-12-23T18:38:27.5236781Z     [36m<div[31m
+2025-12-23T18:38:27.5237385Z       [33mclass[31m=[32m"transition-all duration-200 bg-card border-r border-border flex flex-col h-full w-72"[31m
+2025-12-23T18:38:27.5237926Z     [36m>[31m
+2025-12-23T18:38:27.5238139Z       [36m<div[31m
+2025-12-23T18:38:27.5238791Z         [33mclass[31m=[32m"p-3 border-b border-border flex items-center gap-3"[31m
+2025-12-23T18:38:27.5239216Z       [36m>[31m
+2025-12-23T18:38:27.5239442Z         [36m<button[31m
+2025-12-23T18:38:27.5239798Z           [33maria-label[31m=[32m"Collapse sidebar"[31m
+2025-12-23T18:38:27.5240277Z           [33mclass[31m=[32m"mr-2 p-1 rounded hover:bg-muted"[31m
+2025-12-23T18:38:27.5240623Z         [36m>[31m
+2025-12-23T18:38:27.5240852Z           [36m<span[31m
+2025-12-23T18:38:27.5241441Z             [33maria-hidden[31m=[32m"true"[31m
+2025-12-23T18:38:27.5241755Z           [36m>[31m
+2025-12-23T18:38:27.5241978Z             [0m«[0m
+2025-12-23T18:38:27.5242206Z           [36m</span>[31m
+2025-12-23T18:38:27.5242447Z         [36m</button>[31m
+2025-12-23T18:38:27.5242678Z         [36m<svg[31m
+2025-12-23T18:38:27.5243110Z           [33maria-hidden[31m=[32m"true"[31m
+2025-12-23T18:38:27.5244188Z           [33mclass[31m=[32m"text-primary w-5 h-5 ___9ctc0p0_1xvj9ao f1w7gpdv fez10in f1dd5bof"[31m
+2025-12-23T18:38:27.5245205Z           [33mfill[31m=[32m"currentColor"[31m
+2025-12-23T18:38:27.5245866Z           [33mheight[31m=[32m"20"[31m
+2025-12-23T18:38:27.5246502Z           [33mviewBox[31m=[32m"0 0 20 20"[31m
+2025-12-23T18:38:27.5247099Z           [33mwidth[31m=[32m"20"[31m
+2025-12-23T18:38:27.5247862Z           [33mxmlns[31m=[32m"http://www.w3.org/2000/svg"[31m
+2025-12-23T18:38:27.5249027Z         [36m>[31m
+2025-12-23T18:38:27.5249471Z           [36m<path[31m
+2025-12-23T18:38:27.5253131Z             [33md[31m=[32m"M11.3 2.48a3.5 3.5 0 0 0-2.6 0l-5.76 2.3A1.5 1.5 0 0 0 2 6.18v7.64c0 .62.37 1.17.94 1.4l5.76 2.3a3.5 3.5 0 0 0 2.6 0l5.76-2.3c.57-.23.94-.78.94-1.4V6.18a1.5 1.5 0 0 0-.94-1.4l-5.76-2.3Zm-2.23.93a2.5 2.5 0 0 1 1.86 0l5.22 2.09-2.27.91-6.16-2.46 1.35-.54Zm-2.7 1.08 6.16 2.46L10 7.96 3.85 5.5l2.53-1.01Zm4.13 4.35 6.5-2.6v7.58a.5.5 0 0 1-.31.47l-5.76 2.3c-.14.06-.28.1-.43.13V8.84Zm-1 0v7.88a2.5 2.5 0 0 1-.43-.13l-5.76-2.3a.5.5 0 0 1-.31-.47V6.24l6.5 2.6Z"[31m
+2025-12-23T18:38:27.5256300Z             [33mfill[31m=[32m"currentColor"[31m
+2025-12-23T18:38:27.5256911Z           [36m/>[31m
+2025-12-23T18:38:27.5257364Z         [36m</svg>[31m
+2025-12-23T18:38:27.5257835Z         [36m<h2[31m
+2025-12-23T18:38:27.5258461Z           [33mclass[31m=[32m"font-semibold text-base"[31m
+2025-12-23T18:38:27.5259072Z         [36m>[31m
+2025-12-23T18:38:27.5259472Z           [0mTools[0m
+2025-12-23T18:38:27.5259929Z         [36m</h2>[31m
+2025-12-23T18:38:27.5260348Z         [36m<div[31m
+2025-12-23T18:38:27.5260979Z           [33mclass[31m=[32m"ml-auto flex gap-1"[31m
+2025-12-23T18:38:27.5261840Z         [36m>[31m
+2025-12-23T18:38:27.5262273Z           [36m<button[31m
+2025-12-23T18:38:27.5263064Z             [33mclass[31m=[32m"px-3 py-1 rounded hover:bg-secondary/50"[31m
+2025-12-23T18:38:27.5263743Z           [36m>[31m
+2025-12-23T18:38:27.5264217Z             [0mComponents[0m
+2025-12-23T18:38:27.5264679Z           [36m</button>[31m
+2025-12-23T18:38:27.5265133Z           [36m<button[31m
+2025-12-23T18:38:27.5265923Z             [33mclass[31m=[32m"px-3 py-1 rounded bg-accent text-accent-foreground"[31m
+2025-12-23T18:38:27.5266694Z           [36m>[31m
+2025-12-23T18:38:27.5267131Z             [0mLayouts[0m
+2025-12-23T18:38:27.5267572Z           [36m</button>[31m
+2025-12-23T18:38:27.5267992Z           [36m<button[31m
+2025-12-23T18:38:27.5268697Z             [33mclass[31m=[32m"px-3 py-1 rounded hover:bg-secondary/50"[31m
+2025-12-23T18:38:27.5269375Z           [36m>[31m
+2025-12-23T18:38:27.5269777Z             [0mTheme[0m
+2025-12-23T18:38:27.5270199Z           [36m</button>[31m
+2025-12-23T18:38:27.5270706Z         [36m</div>[31m
+2025-12-23T18:38:27.5271548Z       [36m</div>[31m
+2025-12-23T18:38:27.5272061Z       [36m<div[31m
+2025-12-23T18:38:27.5272696Z         [33mclass[31m=[32m"p-3 flex-1 overflow-auto"[31m
+2025-12-23T18:38:27.5273322Z       [36m>[31m
+2025-12-23T18:38:27.5273728Z         [36m<div[31m
+2025-12-23T18:38:27.5274278Z           [33mclass[31m=[32m"p-4"[31m
+2025-12-23T18:38:27.5274829Z         [36m>[31m
+2025-12-23T18:38:27.5275180Z           [36m<h3[31m
+2025-12-23T18:38:27.5275765Z             [33mclass[31m=[32m"text-sm font-semibold mb-3"[31m
+2025-12-23T18:38:27.5276375Z           [36m>[31m
+2025-12-23T18:38:27.5276839Z             [0mPage Layouts[0m
+2025-12-23T18:38:27.5277319Z           [36m</h3>[31m
+2025-12-23T18:38:27.5277744Z           [36m<div[31m
+2025-12-23T18:38:27.5278313Z             [33mclass[31m=[32m"space-y-3"[31m
+2025-12-23T18:38:27.5278855Z           [36m>[31m
+2025-12-23T18:38:27.5279302Z             [36m<div[31m
+2025-12-23T18:38:27.5280245Z               [33mclass[31m=[32m"flex items-center gap-3 p-3 rounded border border-border"[31m
+2025-12-23T18:38:27.5281372Z             [36m>[31m
+2025-12-23T18:38:27.5281853Z               [36m<div[31m
+2025-12-23T18:38:27.5282901Z                 [33mclass[31m=[32m"w-20 h-12 bg-muted/20 rounded flex items-center justify-center text-xs"[31m
+2025-12-23T18:38:27.5283920Z               [36m>[31m
+2025-12-23T18:38:27.5284451Z                 [0mLanding Page[0m
+2025-12-23T18:38:27.5285020Z               [36m</div>[31m
+2025-12-23T18:38:27.5285469Z               [36m<div[31m
+2025-12-23T18:38:27.5286025Z                 [33mclass[31m=[32m"flex-1"[31m
+2025-12-23T18:38:27.5286545Z               [36m>[31m
+2025-12-23T18:38:27.5287000Z                 [36m<div[31m
+2025-12-23T18:38:27.5287997Z                   [33mclass[31m=[32m"font-medium text-sm"[31m
+2025-12-23T18:38:27.5288518Z                 [36m>[31m
+2025-12-23T18:38:27.5288808Z                   [0mLanding Page[0m
+2025-12-23T18:38:27.5289118Z                 [36m</div>[31m
+2025-12-23T18:38:27.5289394Z                 [36m<div[31m
+2025-12-23T18:38:27.5289794Z                   [33mclass[31m=[32m"text-xs text-muted-foreground"[31m
+2025-12-23T18:38:27.5290359Z                 [36m>[31m
+2025-12-23T18:38:27.5290658Z                   [0mHero + Features + CTA[0m
+2025-12-23T18:38:27.5290971Z                 [36m</div>[31m
+2025-12-23T18:38:27.5291587Z               [36m</div>[31m
+2025-12-23T18:38:27.5292080Z               [36m<div[31m
+2025-12-23T18:38:27.5292691Z                 [33mclass[31m=[32m"flex gap-2"[31m
+2025-12-23T18:38:27.5293261Z               [36m>[31m
+2025-12-23T18:38:27.5293732Z                 [36m<button[31m
+2025-12-23T18:38:27.5296878Z                   [33mclass[31m=[32m"inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5"[31m
+2025-12-23T18:38:27.5299115Z                   [33mdata-slot[31m=[32m"button"[31m
+2025-12-23T18:38:27.5299429Z                 [36m>[31m
+2025-12-23T18:38:27.5299699Z                   [0mPreview[0m
+2025-12-23T18:38:27.5299988Z                 [36m</button>[31m
+2025-12-23T18:38:27.5300277Z                 [36m<button[31m
+2025-12-23T18:38:27.5303239Z                   [33mclass[31m=[32m"inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5"[31m
+2025-12-23T18:38:27.5305480Z                   [33mdata-slot[31m=[32m"button"[31m
+2025-12-23T18:38:27.5305788Z                 [36m>[31m
+2025-12-23T18:38:27.5306029Z                   [0mUse[0m
+2025-12-23T18:38:27.5306306Z                 [36m</button>[31m
+2025-12-23T18:38:27.5306576Z               [36m</div>[31m
+2025-12-23T18:38:27.5306825Z             [36m</div>[31m
+2025-12-23T18:38:27.5307060Z             [36m<div[31m
+2025-12-23T18:38:27.5307548Z               [33mclass[31m=[32m"flex items-center gap-3 p-3 rounded border border-border"[31m
+2025-12-23T18:38:27.5307978Z             [36m>[31m
+2025-12-23T18:38:27.5308209Z               [36m<div[31m
+2025-12-23T18:38:27.5308753Z                 [33mclass[31m=[32m"w-20 h-12 bg-muted/20 rounded flex items-center justify-center text-xs"[31m
+2025-12-23T18:38:27.5309227Z               [36m>[31m
+2025-12-23T18:38:27.5309490Z                 [0mDashboard[0m
+2025-12-23T18:38:27.5309762Z               [36m</div>[31m
+2025-12-23T18:38:27.5310018Z               [36m<div[31m
+2025-12-23T18:38:27.5310330Z                 [33mclass[31m=[32m"flex-1"[31m
+2025-12-23T18:38:27.5310622Z               [36m>[31m
+2025-12-23T18:38:27.5310865Z                 [36m<div[31m
+2025-12-23T18:38:27.5311600Z                   [33mclass[31m=[32m"font-medium text-sm"[31m
+2025-12-23T18:38:27.5311947Z                 [36m>[31m
+2025-12-23T18:38:27.5312218Z                   [0mDashboard[0m
+2025-12-23T18:38:27.5312512Z                 [36m</div>[31m
+2025-12-23T18:38:27.5313043Z                 [36m<div[31m
+2025-12-23T18:38:27.5313436Z                   [33mclass[31m=[32m"text-xs text-muted-foreground"[31m
+2025-12-23T18:38:27.5313795Z                 [36m>[31m
+2025-12-23T18:38:27.5314099Z                   [0mSidebar + Content grid[0m
+2025-12-23T18:38:27.5314406Z                 [36m</div>[31m
+2025-12-23T18:38:27.5314673Z               [36m</div>[31m
+2025-12-23T18:38:27.5314914Z               [36m<div[31m
+2025-12-23T18:38:27.5315358Z                 [33mclass[31m=[32m"flex gap-2"[31m
+2025-12-23T18:38:27.5315648Z               [36m>[31m
+2025-12-23T18:38:27.5315892Z                 [36m<button[31m
+2025-12-23T18:38:27.5316964Z                   [33mclass[31m=[32m"inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none ...[39m
+2025-12-23T18:38:27.5644275Z 
+2025-12-23T18:38:27.5645518Z [31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+2025-12-23T18:38:27.5646081Z 
+2025-12-23T18:38:27.5648931Z [41m[1m FAIL [22m[49m src/components/__tests__/ComponentLibrarySidebar.test.tsx[2m > [22mComponentLibrarySidebar[2m > [22mrenders tabs and switches to layouts and theme
+2025-12-23T18:38:27.5669702Z [31m[1mTestingLibraryElementError[22m[39m: Unable to find an element with the text: /pick a page layout for full-page design/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+2025-12-23T18:38:27.5671997Z 
+2025-12-23T18:38:27.5672316Z Ignored nodes: comments, script, style
+2025-12-23T18:38:27.5672894Z [36m<body>[39m
+2025-12-23T18:38:27.5673288Z   [36m<div>[39m
+2025-12-23T18:38:27.5673675Z     [36m<div[39m
+2025-12-23T18:38:27.5674763Z       [33mclass[39m=[32m"transition-all duration-200 bg-card border-r border-border flex flex-col h-full w-72"[39m
+2025-12-23T18:38:27.5675753Z     [36m>[39m
+2025-12-23T18:38:27.5676152Z       [36m<div[39m
+2025-12-23T18:38:27.5676942Z         [33mclass[39m=[32m"p-3 border-b border-border flex items-center gap-3"[39m
+2025-12-23T18:38:27.5677631Z       [36m>[39m
+2025-12-23T18:38:27.5678033Z         [36m<button[39m
+2025-12-23T18:38:27.5678663Z           [33maria-label[39m=[32m"Collapse sidebar"[39m
+2025-12-23T18:38:27.5679502Z           [33mclass[39m=[32m"mr-2 p-1 rounded hover:bg-muted"[39m
+2025-12-23T18:38:27.5680131Z         [36m>[39m
+2025-12-23T18:38:27.5680538Z           [36m<span[39m
+2025-12-23T18:38:27.5681314Z             [33maria-hidden[39m=[32m"true"[39m
+2025-12-23T18:38:27.5681850Z           [36m>[39m
+2025-12-23T18:38:27.5682237Z             [0m«[0m
+2025-12-23T18:38:27.5682637Z           [36m</span>[39m
+2025-12-23T18:38:27.5683069Z         [36m</button>[39m
+2025-12-23T18:38:27.5683527Z         [36m<svg[39m
+2025-12-23T18:38:27.5684097Z           [33maria-hidden[39m=[32m"true"[39m
+2025-12-23T18:38:27.5685166Z           [33mclass[39m=[32m"text-primary w-5 h-5 ___9ctc0p0_1xvj9ao f1w7gpdv fez10in f1dd5bof"[39m
+2025-12-23T18:38:27.5686143Z           [33mfill[39m=[32m"currentColor"[39m
+2025-12-23T18:38:27.5686748Z           [33mheight[39m=[32m"20"[39m
+2025-12-23T18:38:27.5687353Z           [33mviewBox[39m=[32m"0 0 20 20"[39m
+2025-12-23T18:38:27.5687921Z           [33mwidth[39m=[32m"20"[39m
+2025-12-23T18:38:27.5688673Z           [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+2025-12-23T18:38:27.5689334Z         [36m>[39m
+2025-12-23T18:38:27.5689744Z           [36m<path[39m
+2025-12-23T18:38:27.5693479Z             [33md[39m=[32m"M11.3 2.48a3.5 3.5 0 0 0-2.6 0l-5.76 2.3A1.5 1.5 0 0 0 2 6.18v7.64c0 .62.37 1.17.94 1.4l5.76 2.3a3.5 3.5 0 0 0 2.6 0l5.76-2.3c.57-.23.94-.78.94-1.4V6.18a1.5 1.5 0 0 0-.94-1.4l-5.76-2.3Zm-2.23.93a2.5 2.5 0 0 1 1.86 0l5.22 2.09-2.27.91-6.16-2.46 1.35-.54Zm-2.7 1.08 6.16 2.46L10 7.96 3.85 5.5l2.53-1.01Zm4.13 4.35 6.5-2.6v7.58a.5.5 0 0 1-.31.47l-5.76 2.3c-.14.06-.28.1-.43.13V8.84Zm-1 0v7.88a2.5 2.5 0 0 1-.43-.13l-5.76-2.3a.5.5 0 0 1-.31-.47V6.24l6.5 2.6Z"[39m
+2025-12-23T18:38:27.5696493Z             [33mfill[39m=[32m"currentColor"[39m
+2025-12-23T18:38:27.5697078Z           [36m/>[39m
+2025-12-23T18:38:27.5697527Z         [36m</svg>[39m
+2025-12-23T18:38:27.5697971Z         [36m<h2[39m
+2025-12-23T18:38:27.5698593Z           [33mclass[39m=[32m"font-semibold text-base"[39m
+2025-12-23T18:38:27.5699165Z         [36m>[39m
+2025-12-23T18:38:27.5699546Z           [0mTools[0m
+2025-12-23T18:38:27.5700194Z         [36m</h2>[39m
+2025-12-23T18:38:27.5700587Z         [36m<div[39m
+2025-12-23T18:38:27.5701372Z           [33mclass[39m=[32m"ml-auto flex gap-1"[39m
+2025-12-23T18:38:27.5701983Z         [36m>[39m
+2025-12-23T18:38:27.5702374Z           [36m<button[39m
+2025-12-23T18:38:27.5703156Z             [33mclass[39m=[32m"px-3 py-1 rounded hover:bg-secondary/50"[39m
+2025-12-23T18:38:27.5703864Z           [36m>[39m
+2025-12-23T18:38:27.5704358Z             [0mComponents[0m
+2025-12-23T18:38:27.5704863Z           [36m</button>[39m
+2025-12-23T18:38:27.5705334Z           [36m<button[39m
+2025-12-23T18:38:27.5706186Z             [33mclass[39m=[32m"px-3 py-1 rounded bg-accent text-accent-foreground"[39m
+2025-12-23T18:38:27.5706958Z           [36m>[39m
+2025-12-23T18:38:27.5707390Z             [0mLayouts[0m
+2025-12-23T18:38:27.5707860Z           [36m</button>[39m
+2025-12-23T18:38:27.5708344Z           [36m<button[39m
+2025-12-23T18:38:27.5709141Z             [33mclass[39m=[32m"px-3 py-1 rounded hover:bg-secondary/50"[39m
+2025-12-23T18:38:27.5709828Z           [36m>[39m
+2025-12-23T18:38:27.5710237Z             [0mTheme[0m
+2025-12-23T18:38:27.5710704Z           [36m</button>[39m
+2025-12-23T18:38:27.5711433Z         [36m</div>[39m
+2025-12-23T18:38:27.5711881Z       [36m</div>[39m
+2025-12-23T18:38:27.5712299Z       [36m<div[39m
+2025-12-23T18:38:27.5712922Z         [33mclass[39m=[32m"p-3 flex-1 overflow-auto"[39m
+2025-12-23T18:38:27.5713550Z       [36m>[39m
+2025-12-23T18:38:27.5713997Z         [36m<div[39m
+2025-12-23T18:38:27.5714531Z           [33mclass[39m=[32m"p-4"[39m
+2025-12-23T18:38:27.5715074Z         [36m>[39m
+2025-12-23T18:38:27.5715487Z           [36m<h3[39m
+2025-12-23T18:38:27.5716179Z             [33mclass[39m=[32m"text-sm font-semibold mb-3"[39m
+2025-12-23T18:38:27.5716836Z           [36m>[39m
+2025-12-23T18:38:27.5717308Z             [0mPage Layouts[0m
+2025-12-23T18:38:27.5717746Z           [36m</h3>[39m
+2025-12-23T18:38:27.5718193Z           [36m<div[39m
+2025-12-23T18:38:27.5718736Z             [33mclass[39m=[32m"space-y-3"[39m
+2025-12-23T18:38:27.5719310Z           [36m>[39m
+2025-12-23T18:38:27.5719736Z             [36m<div[39m
+2025-12-23T18:38:27.5720650Z               [33mclass[39m=[32m"flex items-center gap-3 p-3 rounded border border-border"[39m
+2025-12-23T18:38:27.5721699Z             [36m>[39m
+2025-12-23T18:38:27.5722157Z               [36m<div[39m
+2025-12-23T18:38:27.5723273Z                 [33mclass[39m=[32m"w-20 h-12 bg-muted/20 rounded flex items-center justify-center text-xs"[39m
+2025-12-23T18:38:27.5724284Z               [36m>[39m
+2025-12-23T18:38:27.5724850Z                 [0mLanding Page[0m
+2025-12-23T18:38:27.5725444Z               [36m</div>[39m
+2025-12-23T18:38:27.5725940Z               [36m<div[39m
+2025-12-23T18:38:27.5726516Z                 [33mclass[39m=[32m"flex-1"[39m
+2025-12-23T18:38:27.5726979Z               [36m>[39m
+2025-12-23T18:38:27.5727474Z                 [36m<div[39m
+2025-12-23T18:38:27.5728241Z                   [33mclass[39m=[32m"font-medium text-sm"[39m
+2025-12-23T18:38:27.5728901Z                 [36m>[39m
+2025-12-23T18:38:27.5729432Z                   [0mLanding Page[0m
+2025-12-23T18:38:27.5729986Z                 [36m</div>[39m
+2025-12-23T18:38:27.5730529Z                 [36m<div[39m
+2025-12-23T18:38:27.5731548Z                   [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+2025-12-23T18:38:27.5732267Z                 [36m>[39m
+2025-12-23T18:38:27.5733282Z                   [0mHero + Features + CTA[0m
+2025-12-23T18:38:27.5733913Z                 [36m</div>[39m
+2025-12-23T18:38:27.5734467Z               [36m</div>[39m
+2025-12-23T18:38:27.5734958Z               [36m<div[39m
+2025-12-23T18:38:27.5735553Z                 [33mclass[39m=[32m"flex gap-2"[39m
+2025-12-23T18:38:27.5736088Z               [36m>[39m
+2025-12-23T18:38:27.5736577Z                 [36m<button[39m
+2025-12-23T18:38:27.5742067Z                   [33mclass[39m=[32m"inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5"[39m
+2025-12-23T18:38:27.5746201Z                   [33mdata-slot[39m=[32m"button"[39m
+2025-12-23T18:38:27.5746802Z                 [36m>[39m
+2025-12-23T18:38:27.5747328Z                   [0mPreview[0m
+2025-12-23T18:38:27.5747893Z                 [36m</button>[39m
+2025-12-23T18:38:27.5748435Z                 [36m<button[39m
+2025-12-23T18:38:27.5753613Z                   [33mclass[39m=[32m"inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5"[39m
+2025-12-23T18:38:27.5757714Z                   [33mdata-slot[39m=[32m"button"[39m
+2025-12-23T18:38:27.5758327Z                 [36m>[39m
+2025-12-23T18:38:27.5758806Z                   [0mUse[0m
+2025-12-23T18:38:27.5759349Z                 [36m</button>[39m
+2025-12-23T18:38:27.5759906Z               [36m</div>[39m
+2025-12-23T18:38:27.5760380Z             [36m</div>[39m
+2025-12-23T18:38:27.5760810Z             [36m<div[39m
+2025-12-23T18:38:27.5762111Z               [33mclass[39m=[32m"flex items-center gap-3 p-3 rounded border border-border"[39m
+2025-12-23T18:38:27.5763043Z             [36m>[39m
+2025-12-23T18:38:27.5763563Z               [36m<div[39m
+2025-12-23T18:38:27.5764675Z                 [33mclass[39m=[32m"w-20 h-12 bg-muted/20 rounded flex items-center justify-center text-xs"[39m
+2025-12-23T18:38:27.5765681Z               [36m>[39m
+2025-12-23T18:38:27.5766241Z                 [0mDashboard[0m
+2025-12-23T18:38:27.5766838Z               [36m</div>[39m
+2025-12-23T18:38:27.5767381Z               [36m<div[39m
+2025-12-23T18:38:27.5768018Z                 [33mclass[39m=[32m"flex-1"[39m
+2025-12-23T18:38:27.5768608Z               [36m>[39m
+2025-12-23T18:38:27.5769107Z                 [36m<div[39m
+2025-12-23T18:38:27.5769735Z                   [33mclass[39m=[32m"font-medium text-sm"[39m
+2025-12-23T18:38:27.5770402Z                 [36m>[39m
+2025-12-23T18:38:27.5771254Z                   [0mDashboard[0m
+2025-12-23T18:38:27.5771847Z                 [36m</div>[39m
+2025-12-23T18:38:27.5772329Z                 [36m<div[39m
+2025-12-23T18:38:27.5773042Z                   [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+2025-12-23T18:38:27.5773721Z                 [36m>[39m
+2025-12-23T18:38:27.5774270Z                   [0mSidebar + Content grid[0m
+2025-12-23T18:38:27.5774854Z                 [36m</div>[39m
+2025-12-23T18:38:27.5775399Z               [36m</div>[39m
+2025-12-23T18:38:27.5775883Z               [36m<div[39m
+2025-12-23T18:38:27.5776452Z                 [33mclass[39m=[32m"flex gap-2"[39m
+2025-12-23T18:38:27.5777371Z               [36m>[39m
+2025-12-23T18:38:27.5777863Z                 [36m<button[39m
+2025-12-23T18:38:27.5779762Z                   [33mclass[39m=[32m"inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none ...
+2025-12-23T18:38:27.5782334Z [90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+2025-12-23T18:38:27.5784291Z [90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+2025-12-23T18:38:27.5785723Z [90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+2025-12-23T18:38:27.5787351Z [90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+2025-12-23T18:38:27.5788768Z [36m [2m❯[22m src/components/__tests__/ComponentLibrarySidebar.test.tsx:[2m19:19[22m[39m
+2025-12-23T18:38:27.5790259Z     [90m 17| [39m    fireEvent[33m.[39m[34mclick[39m(screen[33m.[39m[34mgetByText[39m([32m'Layouts'[39m))[33m;[39m
+2025-12-23T18:38:27.5792342Z     [90m 18| [39m    [90m// Use regex matcher for robust text search[39m
+2025-12-23T18:38:27.5793469Z     [90m 19| [39m    expect(screen.getByText(/pick a page layout for full-page design/i…
+2025-12-23T18:38:27.5794332Z     [90m   | [39m                  [31m^[39m
+2025-12-23T18:38:27.5794903Z     [90m 20| [39m
+2025-12-23T18:38:27.5795448Z     [90m 21| [39m    [90m// Switch to Theme[39m
+2025-12-23T18:38:27.5795819Z 
+2025-12-23T18:38:27.5796263Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+2025-12-23T18:38:27.5796613Z 
+2025-12-23T18:38:27.5796653Z 
+2025-12-23T18:38:27.5797481Z [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+2025-12-23T18:38:27.5798893Z [2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+2025-12-23T18:38:27.5800133Z [2m   Start at [22m 18:38:21
+2025-12-23T18:38:27.5801896Z [2m   Duration [22m 6.06s[2m (transform 3.18s, setup 0ms, collect 5.63s, tests 222ms, environment 2.98s, prepare 398ms)[22m
+2025-12-23T18:38:27.5802666Z 
+2025-12-23T18:38:27.5802678Z 
+2025-12-23T18:38:27.5881199Z ##[error]TestingLibraryElementError: Unable to find an element with the text: /pick a page layout for full-page design/i. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="transition-all duration-200 bg-card border-r border-border flex flex-col h-full w-72"
+    >
+      <div
+        class="p-3 border-b border-border flex items-center gap-3"
+      >
+        <button
+          aria-label="Collapse sidebar"
+          class="mr-2 p-1 rounded hover:bg-muted"
+        >
+          <span
+            aria-hidden="true"
+          >
+            «
+          </span>
+        </button>
+        <svg
+          aria-hidden="true"
+          class="text-primary w-5 h-5 ___9ctc0p0_1xvj9ao f1w7gpdv fez10in f1dd5bof"
+          fill="currentColor"
+          height="20"
+          viewBox="0 0 20 20"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11.3 2.48a3.5 3.5 0 0 0-2.6 0l-5.76 2.3A1.5 1.5 0 0 0 2 6.18v7.64c0 .62.37 1.17.94 1.4l5.76 2.3a3.5 3.5 0 0 0 2.6 0l5.76-2.3c.57-.23.94-.78.94-1.4V6.18a1.5 1.5 0 0 0-.94-1.4l-5.76-2.3Zm-2.23.93a2.5 2.5 0 0 1 1.86 0l5.22 2.09-2.27.91-6.16-2.46 1.35-.54Zm-2.7 1.08 6.16 2.46L10 7.96 3.85 5.5l2.53-1.01Zm4.13 4.35 6.5-2.6v7.58a.5.5 0 0 1-.31.47l-5.76 2.3c-.14.06-.28.1-.43.13V8.84Zm-1 0v7.88a2.5 2.5 0 0 1-.43-.13l-5.76-2.3a.5.5 0 0 1-.31-.47V6.24l6.5 2.6Z"
+            fill="currentColor"
+          />
+        </svg>
+        <h2
+          class="font-semibold text-base"
+        >
+          Tools
+        </h2>
+        <div
+          class="ml-auto flex gap-1"
+        >
+          <button
+            class="px-3 py-1 rounded hover:bg-secondary/50"
+          >
+            Components
+          </button>
+          <button
+            class="px-3 py-1 rounded bg-accent text-accent-foreground"
+          >
+            Layouts
+          </button>
+          <button
+            class="px-3 py-1 rounded hover:bg-secondary/50"
+          >
+            Theme
+          </button>
+        </div>
+      </div>
+      <div
+        class="p-3 flex-1 overflow-auto"
+      >
+        <div
+          class="p-4"
+        >
+          <h3
+            class="text-sm font-semibold mb-3"
+          >
+            Page Layouts
+          </h3>
+          <div
+            class="space-y-3"
+          >
+            <div
+              class="flex items-center gap-3 p-3 rounded border border-border"
+            >
+              <div
+                class="w-20 h-12 bg-muted/20 rounded flex items-center justify-center text-xs"
+              >
+                Landing Page
+              </div>
+              <div
+                class="flex-1"
+              >
+                <div
+                  class="font-medium text-sm"
+                >
+                  Landing Page
+                </div>
+                <div
+                  class="text-xs text-muted-foreground"
+                >
+                  Hero + Features + CTA
+                </div>
+              </div>
+              <div
+                class="flex gap-2"
+              >
+                <button
+                  class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5"
+                  data-slot="button"
+                >
+                  Preview
+                </button>
+                <button
+                  class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:point
+2025-12-23T18:38:27.7043436Z ##[error]Process completed with exit code 1.
