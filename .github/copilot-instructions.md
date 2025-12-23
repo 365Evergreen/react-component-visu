@@ -59,6 +59,8 @@
 
 ## Tests, CI, and PR guidance
 - Tests: `npm run test` (Vitest, JS DOM). See `src/components/__tests__` and `src/lib/__tests__` for examples.
+- Run tests silently in watch mode: `npx vitest --watch --silent`
+- CI: GitHub Actions runs tests, lint, and build on PRs.
 - Lint & build: run `npm run lint` and `npm run build` in PRs that modify core behavior.
 - Schema changes: If you modify `src/types/component.ts`, add unit tests and include a short **migration note** in the PR explaining downstream breakage/rationale.
 - Update `README.md` / `TEMPLATE.md` when changing public behavior or developer workflow (see `CONTRIBUTING.md`).
@@ -72,8 +74,61 @@
 ---
 
 ## Quick examples (copy-paste)
+
 - Generator test assertion (see `src/lib/__tests__/code-generator.test.ts`):
   - expect generated code to contain `import { Button } from '@/components/ui/button';` and `const [name, setName] = useState('');`
+
+- Canvas JSON → generated TSX example (small)
+
+  Input (Canvas JSON):
+
+  ```json
+  {
+    "id": "root-1",
+    "type": "div",
+    "props": {},
+    "children": [
+      { "id": "btn-1", "type": "Button", "props": { "children": "Click" }, "children": [], "events": [{ "type": "onClick", "action": "log" }], "styles": "" },
+      { "id": "input-1", "type": "Input", "props": { "placeholder": "name" }, "children": [], "events": [{ "type": "onChange", "action": "setState", "target": "name" }], "styles": "" }
+    ],
+    "events": [],
+    "styles": ""
+  }
+  ```
+
+  Generated TSX (what `generateComponentCode` produces):
+
+  ```tsx
+  import React, { useState } from 'react';
+  import { Button } from '@/components/ui/button';
+  import { Input } from '@/components/ui/input';
+
+  export function GeneratedComponent() {
+    const [name, setName] = useState('');
+    return (
+      <div>
+        <Button>Click</Button>
+        <Input placeholder="name" onChange={(e) => setName(e.target.value)} />
+      </div>
+    );
+  }
+
+  export default GeneratedComponent;
+  ```
+
+- Generator test template (Vitest)
+
+  ```ts
+  import { describe, it, expect } from 'vitest';
+  import { generateComponentCode } from '../code-generator';
+
+  it('generates imports and state for setState events', () => {
+    const code = generateComponentCode(sample as any, 'GeneratedTest');
+    expect(code).toContain("import { Button } from '@/components/ui/button';");
+    expect(code).toContain("const [name, setName] = useState('');");
+  });
+  ```
+
 - Adding a UI primitive:
   - File: `src/components/ui/mycomp.tsx` export `function MyComp() {}`
   - Add to `COMPONENT_LIBRARY` and `isUIComponent` if generator should import it
@@ -81,4 +136,4 @@
 
 ---
 
-If anything above is unclear or you'd like the file to include a short example generator input → output, tell me which area to expand and I’ll iterate. ✅
+If anything above is unclear or you'd like the file to include a different example or more test templates, tell me which area to expand and I’ll iterate. ✅
