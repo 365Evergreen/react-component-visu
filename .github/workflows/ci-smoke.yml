@@ -1,0 +1,42 @@
+name: CI Smoke & Dev Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (allow legacy peer deps)
+        run: npm ci --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+
+      - name: Check dist index for built asset
+        run: npm run check:dist
+
+      - name: Start dev server in background
+        run: |
+          nohup npm run dev &>/tmp/dev.log &
+          npx wait-on http://127.0.0.1:5173 --timeout 120000
+
+      - name: Dev server smoke test
+        run: |
+          curl -fsS http://127.0.0.1:5173 || (echo "Dev server did not respond" && tail -n 200 /tmp/dev.log && exit 1)
+
+      - name: Run tests
+        run: npm test -- --run

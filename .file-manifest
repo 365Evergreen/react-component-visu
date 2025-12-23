@@ -1,0 +1,15 @@
+.spark-initial-sha
+PRD.md
+index.html
+runtime.config.json
+spark.meta.json
+src/App.tsx
+src/components/CanvasArea.tsx
+src/components/ComponentLibrarySidebar.tsx
+src/components/ComponentTreeView.tsx
+src/components/PropertyPanel.tsx
+src/components/TopToolbar.tsx
+src/index.css
+src/lib/code-generator.ts
+src/lib/component-library.ts
+src/types/component.ts
