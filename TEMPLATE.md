@@ -27,6 +27,9 @@ Export & generator notes
 Bootstrapping helper
 - The repo includes `scripts/create-from-template.sh` to quickly clone and initialize a new project. See the script header for usage.
 
+Sidebar features
+- The left "Tools" sidebar includes three tabs: **Components** (collapsible tree view grouped by category), **Layouts** (page layout picker for full-page design), and **Theme** (live theme token editor that applies CSS variables and can export `theme.json`).
+
 Support & contribution
 - For template-related changes, open a PR and describe how downstream projects should migrate.
 

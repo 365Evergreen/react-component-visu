@@ -29,6 +29,11 @@ Project-specific conventions to preserve
 - Container types (nesting): `CONTAINER_TYPES` list in `component-library.ts` determines which library items can accept children; maintain consistency there when adding containers.
 - Persistent state: the app uses `useKV` from `@github/spark/hooks` for simple persistence; keys are strings and used directly (e.g., `canvas-components`).
 
+Sidebar features
+- The left sidebar (Tools) now includes three tabs: **Components** (collapsible tree view grouped by category), **Layouts** (page layout picker for full-page design), and **Theme** (live theme token editor that applies CSS variables and can export `theme.json`).
+- Layout changes emit `spark:select-layout` events; theme changes emit `spark:theme-change` events so other parts of the app (like `App.tsx`) can react.
+- If you modify the sidebar or add new layout presets, update `src/components/PageLayoutPicker.tsx` and ensure any new theme token keys are applied consistently in `ThemeDesigner.tsx`.
+
 Integration & plugin notes
 - `packages/spark-tools` contains the local `@github/spark` package (plugins, hooks). If you modify plugin behavior, add/adjust tests in that package and update exports in its `package.json`.
 - Icon imports are proxied via `createIconImportProxy()` — do not remove or replace unless you understand the Phosphor icon proxy behavior.

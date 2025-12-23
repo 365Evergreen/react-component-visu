@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getLayoutComponents } from '@/lib/layouts';
 import { useKV } from '@github/spark/hooks';
 import { Toaster, toast } from 'sonner';
 import { ComponentLibrarySidebar } from '@/components/ComponentLibrarySidebar';
@@ -13,8 +14,9 @@ function App() {
   const [components, setComponents] = useKV<CanvasComponent[]>('canvas-components', []);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [exportHistory, setExportHistory] = useKV<any[]>('export-history', []);
-
-  const currentComponents = components || [];
+  const [pageLayout, setPageLayout] = useKV<string>('page-layout', 'landing');
+  const [themeTokens, setThemeTokens] = useKV<Record<string,string>>('theme-tokens', {});
+  const [previewComponents, setPreviewComponents] = useState<CanvasComponent[] | null>(null);
 
   const handleAddComponent = (type: ComponentType) => {
     const libraryItem = COMPONENT_LIBRARY.find(c => c.type === type);
@@ -230,6 +232,82 @@ function App() {
   };
 
   const selectedComponent = findComponent(currentComponents, selectedId);
+
+  useEffect(() => {
+    const onLayout = (e: any) => {
+      const id = e.detail as string;
+      const detail = e.detail;
+
+      // If event provides components (from preview/apply), accept them
+      if (Array.isArray(detail)) {
+        setComponents(detail as CanvasComponent[]);
+        setPreviewComponents(null);
+        setSelectedId(null);
+        toast.success('Layout applied');
+        return;
+      }
+
+      // else treat as id and apply
+      const id = detail as string;
+      const layoutComps = getLayoutComponents(id);
+
+      if (layoutComps && layoutComps.length > 0) {
+        setComponents(layoutComps);
+        setPageLayout(id);
+        setSelectedId(null);
+        toast.success(`Layout applied: ${id}`);
+      } else {
+        setPageLayout(id);
+        toast.success(`Layout set to ${id}`);
+      }
+    };
+
+    const onPreview = (e: any) => {
+      const comps = e.detail as CanvasComponent[];
+      setPreviewComponents(comps ||apply-layout', onLayout as EventListener);
+    window.addEventListener('spark:preview-layout', onPreview as EventListener);
+    window.addEventListener('spark:theme-change', onTheme as EventListener);
+
+    return () => {
+      window.removeEventListener('spark:apply-layout', onLayout as EventListener);
+      window.removeEventListener('spark:preview-layout', onPreview
+      setPreviewComponents(null);
+
+    const onTheme = (e: any) => {
+      const tokens = e.detail as Record<string,string>;
+      setThemeTokens(tokens);
+      // re-apply to document root as a safety
+      if (typeof document !== 'undefined') {
+        const root = document.documentElement;
+        Object.entries(tokens || {}).forEach(([k, v]) => {
+          if (v) root.style.setProperty(k, v);
+        });
+      }
+      toast.success('Theme updated');
+    };
+div className="flex-1 relative">
+          {previewComponents && (
+            <div className="absolute right-4 top-4 z-20 bg-card p-3 rounded shadow-lg border border-border flex gap-2 items-center">
+              <div className="text-sm">Preview active</div>
+              <button className="px-2 py-1 rounded bg-primary text-primary-foreground text-sm" onClick={() => {
+                setComponents(previewComponents);
+                setPreviewComponents(null);
+                toast.success('Layout applied');
+              }}>Apply</button>
+              <button className="px-2 py-1 rounded bg-muted text-sm" onClick={() => setPreviewComponents(null)}>Discard</button>
+            </div>
+          )}
+
+          <CanvasArea
+            components={previewComponents || currentComponents}
+            selectedId={selectedId}
+            onSelectComponent={setSelectedId}
+            onDeleteComponent={handleDeleteComponent}
+            onMoveComponent={handleMoveComponent}
+            onAddComponentToContainer={handleAddComponentToContainer}
+          />
+        </div
+  }, [setPageLayout, setThemeTokens]);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
