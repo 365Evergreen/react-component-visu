@@ -1,61 +1,84 @@
-# Copilot / AI Agent Instructions — spark-template
+# Copilot / AI Agent Instructions — react-component-visu
 
-Quick orientation
+## Quick orientation
 - Purpose: Visual React page/component builder (drag/drop canvas) that generates TypeScript React components (see `src/lib/code-generator.ts`).
-- Stack: Vite + React + TypeScript + Tailwind. This template is stable — changes to the generator or core types need tests and migration notes.
+- Stack: Vite + React + TypeScript + Tailwind. Changes that affect code generation or the component schema need tests and a migration note.
 
-Quick commands (root)
-- Install: `npm ci` (or `npm install`) to restore deps.
-- Dev: `npm run dev` (vite)
-- Build: `npm run build` (runs `tsc -b --noCheck && vite build`)
+---
+
+## Quick commands (root)
+- Install: `npm ci` (or `npm install`)
+- Dev (hot-reload): `npm run dev` (Vite)
 - Preview built site: `npm run preview`
+- Build (typecheck + bundle): `npm run build` (runs `tsc -b --noCheck && vite build`)
 - Kill dev port (5000): `npm run kill` (runs `fuser -k 5000/tcp`)
-- Tests: `npm run test` (vitest, jsdom environment; see `vitest.config.ts`)
+- Tests: `npm run test` (Vitest, `jsdom` env — see `vitest.config.ts`)
 - Lint: `npm run lint`
-- Deploy (gh-pages): `npm run predeploy` then `npm run deploy` (uses `gh-pages -d dist`)
+- Deploy (gh-pages): `npm run predeploy` then `npm run deploy`
 
-Where to look (key files)
-- `src/App.tsx` — orchestration and persistence. Key `useKV` keys: `canvas-components`, `export-history`, `page-layout`, `theme-tokens` (used for preview/apply operations and persisted app state).
-- `src/lib/code-generator.ts` — rules for generating TSX: 1) imports: UI components are imported from `@/components/ui/<lowercase>`, 2) `isUIComponent` lists components considered UI primitives, 3) events -> state mapping (e.g., `setState` generates `useState` + handler).
-- `src/lib/component-library.ts` — `COMPONENT_LIBRARY` & `CONTAINER_TYPES` control available components, default props, and nesting rules.
-- `src/types/component.ts` — canonical model: `CanvasComponent`, `ComponentEvent`, `EventType`, `ComponentLibraryItem` (source of truth; change carefully).
-- `src/components/ui/*` — UI primitives: filenames are lowercase (e.g., `button.tsx`) and export PascalCase (e.g., `Button`) used by generator.
-- `src/components/*` — editor UI (CanvasArea, Sidebar, PropertyPanel, etc.).
-- `vite.config.ts` — DO NOT REMOVE `createIconImportProxy()` or `sparkPlugin()`; also uses `PROJECT_ROOT` env var when resolving `@`.
-- `tailwind.config.js` + `theme.json` — theme tokens are applied as CSS variables.
+> Tip: Run `npm run build` after generator or type/schema changes to catch bundling/typing regressions early.
 
-Event and integration notes
+---
+
+## Key files & concepts (short)
+- `src/App.tsx` — application orchestrator and persistence. Uses `useKV` from `@github/spark/hooks`. Persistent keys to know: `canvas-components`, `export-history`, `page-layout`, `theme-tokens`.
+- `src/lib/code-generator.ts` — **single source of generation rules**:
+  - Imports UI primitives from `@/components/ui/<lowercase>` (e.g. `Button` -> `@/components/ui/button`).
+  - `isUIComponent` controls which types are treated as imports.
+  - `events` -> state mapping: `{ action: 'setState', target: 'foo' }` generates `const [foo, setFoo] = useState('')` and `onChange` handlers that use `e.target.value`.
+  - Update generator unit tests in `src/lib/__tests__/code-generator.test.ts` when changing behavior.
+- `src/lib/component-library.ts` — `COMPONENT_LIBRARY` entries and `CONTAINER_TYPES` control available components, default props, and allowed nesting.
+- `src/types/component.ts` — canonical schema (`CanvasComponent`, `ComponentEvent`, `EventType`, `ExportConfig`) — **authoritative** for changes.
+- `src/lib/layouts.ts` — predefined layouts accessed with `getLayoutComponents(id)` and exposed via `spark:apply-layout` events.
+- `src/components/ui/*` — UI primitives (filename convention: lowercase file name, PascalCase export). Example: `src/components/ui/button.tsx` exports `Button`.
+
+---
+
+## Integration points & runtime behavior
 - Window events used by the editor:
-  - `spark:apply-layout` — payload is either an array of `CanvasComponent` (applies layout) or a layout id string (uses `getLayoutComponents`).
-  - `spark:preview-layout` — payload is an array of `CanvasComponent` to preview.
-  - `spark:theme-change` — payload is `{ [tokenName]: value }`; handler writes tokens to `document.documentElement` and persists via `useKV`.
-- Persistence: `useKV` from `@github/spark/hooks` stores simple state (strings/objects). Key names are literals in `App.tsx`.
+  - `spark:apply-layout` — payload: components array (applies immediately) OR layout id string (calls `getLayoutComponents`).
+  - `spark:preview-layout` — payload: components array for preview.
+  - `spark:theme-change` — payload: `{ [tokenName]: value }` — tokens are written to `document.documentElement` and persisted via `useKV`.
+- `useKV` (from `@github/spark/hooks`) persists small app state. Keys are hard-coded in `App.tsx` — use those exact keys when integrating.
+- `ExportConfig` (see `src/types/component.ts`) defines `destination: 'local' | 'git'`; currently `handleExport` writes to `export-history` in state — there is no automatic remote push in this template.
 
-Project-specific conventions
-- Module alias: `@` -> `src` (configured in `tsconfig.json`, `vite.config.ts`, and `vitest.config.ts`) — always prefer `@/` imports.
-- UI files: save UI primitives under `src/components/ui/<lowercase>.tsx` and add to generator `isUIComponent` list when needed.
-- State & events: `ComponentEvent { action: 'setState', target: 'name' }` -> `const [name, setName] = useState('')` and `onChange={(e) => setName(e.target.value)}` in generated code.
-- Container types: only values in `CONTAINER_TYPES` should be treated as containers for nesting.
+---
 
-Testing & changing generator code
-- Tests run with `npm run test` (vitest, jsdom). Example generator test located at `src/lib/__tests__/code-generator.test.ts` — it asserts import lines and generated `useState` declarations.
-- When changing code generation or `src/types/component.ts`:
-  - Add unit tests in `src/lib/__tests__` and run `npm run test`.
-  - Run `npm run lint` and `npm run build` to catch TypeScript and bundling issues.
-  - Include a migration note in PRs for downstream projects.
+## Project conventions & patterns (actionable)
+- Module alias: `@` → `src` (configured in `tsconfig.json`, `vite.config.ts`, and `vitest.config.ts`) — prefer `@/` imports for consistency.
+- UI primitives:
+  1. Add component file in `src/components/ui/<lowercase>.tsx` that exports a PascalCase component.
+  2. Add an entry in `COMPONENT_LIBRARY` (`src/lib/component-library.ts`) with `defaultProps`.
+  3. If you want the generator to import it, add the name to `isUIComponent` in `src/lib/code-generator.ts`.
+  4. Add unit tests in `src/lib/__tests__` that assert import lines and generated state/handlers.
+- Container behavior: only types in `CONTAINER_TYPES` may accept nested children. Use `CONTAINER_TYPES` when checking nesting rules.
+- Events -> State: `setState` events create `useState` and `onChange` handling assumes input-like events (uses `e.target.value`). If you need other semantics, update `generateEvents` and add tests.
+- Styling: some components set `styles` (string) and the generator maps that to `className` on the output.
 
-Local tooling note
-- The template mentions `packages/spark-tools` (local `@github/spark` plugin/hooks) in some forks; this repo may or may not include it. If present, run its tests (`cd packages/spark-tools && npm test`) and update exports there when changing plugin behavior.
+---
 
-Safety & integration warnings
-- **DO NOT** remove `createIconImportProxy()` or `sparkPlugin()` from `vite.config.ts` without validating icon imports and the dev build.
-- Keep `src/types/component.ts` authoritative. Large schema changes should include tests and a PR migration note.
+## Tests, CI, and PR guidance
+- Tests: `npm run test` (Vitest, JS DOM). See `src/components/__tests__` and `src/lib/__tests__` for examples.
+- Lint & build: run `npm run lint` and `npm run build` in PRs that modify core behavior.
+- Schema changes: If you modify `src/types/component.ts`, add unit tests and include a short **migration note** in the PR explaining downstream breakage/rationale.
+- Update `README.md` / `TEMPLATE.md` when changing public behavior or developer workflow (see `CONTRIBUTING.md`).
 
-Short examples
-- Add UI primitive:
-  1. `src/components/ui/<lowercase>.tsx` export `function MyComp(){}`
-  2. Add `MyComp` type/entry in `src/lib/component-library.ts`
-  3. If generator must import it, add `MyComp` to `isUIComponent` in `src/lib/code-generator.ts`
-  4. Add unit tests in `src/lib/__tests__` and run `npm run test`
+---
 
-If anything is unclear or you want additional examples (small generated code samples or test templates), tell me which part to expand and I’ll add a concise example or test. ✅
+## Local tooling & warnings
+- `vite.config.ts` contains `createIconImportProxy()` and `sparkPlugin()` — **do not remove** them without validating icon imports and the dev build.
+- The repo declares Yarn/NPM workspaces (`packages/*`). If a `packages` folder exists, run tests for those packages too.
+
+---
+
+## Quick examples (copy-paste)
+- Generator test assertion (see `src/lib/__tests__/code-generator.test.ts`):
+  - expect generated code to contain `import { Button } from '@/components/ui/button';` and `const [name, setName] = useState('');`
+- Adding a UI primitive:
+  - File: `src/components/ui/mycomp.tsx` export `function MyComp() {}`
+  - Add to `COMPONENT_LIBRARY` and `isUIComponent` if generator should import it
+  - Add unit test in `src/lib/__tests__`
+
+---
+
+If anything above is unclear or you'd like the file to include a short example generator input → output, tell me which area to expand and I’ll iterate. ✅
