@@ -1,4 +1,9 @@
 # ✨ Welcome to Your Spark Template!
+
+[![PR Checks](https://github.com/365Evergreen/react-component-visu/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/365Evergreen/react-component-visu/actions/workflows/pr-checks.yml)
+[![Push Checks](https://github.com/365Evergreen/react-component-visu/actions/workflows/push-checks.yml/badge.svg)](https://github.com/365Evergreen/react-component-visu/actions/workflows/push-checks.yml)
+[![Pages](https://github.com/365Evergreen/react-component-visu/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/365Evergreen/react-component-visu/actions/workflows/deploy-pages.yml)
+
 You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
 
 This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
