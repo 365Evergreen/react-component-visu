@@ -1,1 +1,24 @@
-{}
+{
+	"light": {
+		"background": "0 0% 100%",
+		"foreground": "210 60% 2%",
+		"card": "0 0% 100%",
+		"card-foreground": "210 60% 2%",
+		"primary": "228 55% 25%",
+		"primary-foreground": "0 0% 100%",
+		"border": "0 0% 90%",
+		"muted": "0 0% 96%",
+		"muted-foreground": "0 0% 45%"
+	},
+	"dark": {
+		"background": "230 25% 5%",
+		"foreground": "0 0% 98%",
+		"card": "230 25% 8%",
+		"card-foreground": "0 0% 98%",
+		"primary": "0 0% 94%",
+		"primary-foreground": "230 25% 5%",
+		"border": "230 25% 15%",
+		"muted": "230 25% 12%",
+		"muted-foreground": "0 0% 70%"
+	}
+}
