@@ -1,12 +1,33 @@
 {
-    "name": "app",
-    "version": "1.0.0",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {      
-      "start": "node proxy.js"
-    },
-    "author": "",
-    "license": "MIT",
-    "description": "A wrapper for deploying to the GitHub runtime"
+  "name": "react-component-visu",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node proxy.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5173",
+    "test": "vitest",
+    "test:watch": "vitest",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "check:dist": "[ -f dist/index.html ] || (echo 'dist missing' && exit 1)"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "A visual React builder",
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^4.4.9",
+    "@vitejs/plugin-react": "^4.0.0",
+    "typescript": "^5.8.2",
+    "vitest": "^0.34.1",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.0.0"
   }
+}
