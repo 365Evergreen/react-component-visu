@@ -16,7 +16,7 @@ This is a sophisticated visual IDE for React component creation with multiple in
 
 ### Visual Component Canvas
 - **Functionality**: Drag-and-drop canvas for building React component UIs with visual feedback
-- **Purpose**: Bridge visual design to actual implementation code
+- **Purpose**: Bridge visual design to actual implementation code and create interactive prototypes
 - **Trigger**: Designer drags components from library onto canvas or nests them inside containers
 - **Progression**: Select component from library → Drag onto canvas or into container → Position and nest → Configure properties → View generated code
 - **Success criteria**: Smooth drag operations, clear nesting indicators, accurate visual representation of component hierarchy
