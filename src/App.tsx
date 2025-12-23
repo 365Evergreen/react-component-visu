@@ -12,6 +12,7 @@ const getInitialTheme = () => {
 import { useState, useEffect } from 'react';
 import { getLayoutComponents } from '@/lib/layouts';
 import { Toaster, toast } from 'sonner';
+
 import { ComponentLibrarySidebar } from '@/components/ComponentLibrarySidebar';
 import { CanvasArea } from '@/components/CanvasArea';
 import { PropertyPanel } from '@/components/PropertyPanel';
@@ -19,13 +20,18 @@ import { ComponentTreeView } from '@/components/ComponentTreeView';
 import { TopToolbar } from '@/components/TopToolbar';
 import { CanvasComponent, ComponentType } from '@/types/component';
 import { COMPONENT_LIBRARY } from '@/lib/component-library';
+import { ThemeDesigner } from './components/ThemeDesigner';
+import { PageLayoutPicker } from './components/PageLayoutPicker';
+
 
 function App() {
-  // Collapsible sidebar state
-  const [leftSidebarOpen, setLeftSidebarOpen] = useState(() => getInitialSidebarState('leftSidebarOpen', true));
+  // Collapsible right sidebar state
   const [rightSidebarOpen, setRightSidebarOpen] = useState(() => getInitialSidebarState('rightSidebarOpen', true));
   // Theme mode
   const [theme, setTheme] = useState(() => getInitialTheme());
+
+  // Sidebar selection state
+  const [selectedSidebarItem, setSelectedSidebarItem] = useState<string>('theme-generator');
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -329,18 +335,14 @@ function App() {
       />
 
       <div className="flex-1 flex overflow-hidden">
-        {/* Collapsible Left Sidebar */}
-        <ComponentLibrarySidebar 
-          onComponentSelect={handleAddComponent} 
-          collapsed={!leftSidebarOpen}
-          onToggleCollapse={() => {
-            setLeftSidebarOpen(v => {
-              localStorage.setItem('leftSidebarOpen', (!v).toString());
-              return !v;
-            });
-          }}
-        />
-
+        {/* Sidebar in a single <aside> */}
+        <aside className="w-56 border-r bg-muted/40 h-full">
+          <ComponentLibrarySidebar
+            selected={selectedSidebarItem}
+            onSelect={setSelectedSidebarItem}
+          />
+        </aside>
+        {/* Main content area */}
         <div className="flex-1 relative">
           {previewComponents && (
             <div className="absolute right-4 top-4 z-20 bg-card p-3 rounded shadow-lg border border-border flex gap-2 items-center">
@@ -353,17 +355,29 @@ function App() {
               <button className="px-2 py-1 rounded bg-muted text-sm" onClick={() => setPreviewComponents(null)}>Discard</button>
             </div>
           )}
-
-          <CanvasArea
-            components={previewComponents || currentComponents}
-            selectedId={selectedId}
-            onSelectComponent={setSelectedId}
-            onDeleteComponent={handleDeleteComponent}
-            onMoveComponent={handleMoveComponent}
-            onAddComponentToContainer={handleAddComponentToContainer}
-          />
+          {/* Main content area based on sidebar selection */}
+          {selectedSidebarItem === 'theme-generator' && (
+            <div className="p-6">
+              <ThemeDesigner />
+            </div>
+          )}
+          {selectedSidebarItem === 'page-layouts' && (
+            <div className="p-6">
+              <PageLayoutPicker />
+            </div>
+          )}
+          {/* If a component type is selected, show the canvas */}
+          {COMPONENT_LIBRARY.some(c => c.type === selectedSidebarItem) && (
+            <CanvasArea
+              components={previewComponents || currentComponents}
+              selectedId={selectedId}
+              onSelectComponent={setSelectedId}
+              onDeleteComponent={handleDeleteComponent}
+              onMoveComponent={handleMoveComponent}
+              onAddComponentToContainer={handleAddComponentToContainer}
+            />
+          )}
         </div>
-
         {/* Collapsible Right Sidebar */}
         <PropertyPanel
           selectedComponent={selectedComponent}

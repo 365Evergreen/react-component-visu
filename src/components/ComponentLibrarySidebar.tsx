@@ -1,4 +1,18 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+// Simple SVG icons for top-level groups
+const icons = {
+  Tools: (
+    <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M17.7 14.7l-2.4-2.4a1 1 0 0 0-1.4 0l-1.1 1.1-3.6-3.6 1.1-1.1a1 1 0 0 0 0-1.4l-2.4-2.4a1 1 0 0 0-1.4 0l-1.1 1.1a3 3 0 0 0 0 4.2l7.1 7.1a3 3 0 0 0 4.2 0l1.1-1.1a1 1 0 0 0 0-1.4z" fill="currentColor"/></svg>
+  ),
+  Layouts: (
+    <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="2"/><rect x="7" y="7" width="6" height="6" rx="1" fill="currentColor"/></svg>
+  ),
+  Navigation: (
+    <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M10 2l2.39 7.26H20l-6.19 4.49L15.82 20 10 15.27 4.18 20l1.99-6.25L0 9.26h7.61z" fill="currentColor"/></svg>
+  ),
+  Components: (
+    <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="4" stroke="currentColor" strokeWidth="2"/><circle cx="10" cy="10" r="3" fill="currentColor"/></svg>
+  ),
 import { Input } from '@/components/ui/input';
 import { PageLayoutPicker } from './PageLayoutPicker';
 import { ThemeDesigner } from './ThemeDesigner';
@@ -6,115 +20,228 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Search16Regular, Box20Regular } from '@fluentui/react-icons';
-import { COMPONENT_LIBRARY, CONTAINER_TYPES } from '@/lib/component-library';
+import { COMPONENT_LIBRARY } from '@/lib/component-library';
 import { ComponentType } from '@/types/component';
 
+
+
+
+import { cn } from '@/lib/utils';
+
+// Friendly names for groups and components
+const GROUP_LABELS: Record<string, string> = {
+  tools: 'Tools',
+  layouts: 'Layouts',
+  navigation: 'Navigation',
+  components: 'Components',
+};
+
+const FRIENDLY_NAMES: Record<string, string> = {
+  'theme-generator': 'Theme Generator',
+  'page-layouts': 'Page Layouts',
+  menubar: 'Horizontal menu bar',
+  tabs: 'Tabbed interface',
+  button: 'Clickable button with variants',
+  input: 'Text input field',
+  label: 'Text label for inputs',
+  checkbox: 'Checkbox input',
+  switch: 'Toggle switch',
+  select: 'Dropdown select menu',
+  textarea: 'Multi-line text input',
+  carousel: 'Scrollable carousel for items',
+  card: 'Container with elevation',
+  badge: 'Small status badge',
+  // ...add more as needed
+};
+
 interface ComponentLibrarySidebarProps {
-  onComponentSelect: (type: ComponentType) => void;
-  collapsed?: boolean;
-  onToggleCollapse?: () => void;
+  selected: string | null;
+  onSelect: (key: string) => void;
 }
 
-export function ComponentLibrarySidebar({ onComponentSelect, collapsed = false, onToggleCollapse }: ComponentLibrarySidebarProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<'components'|'layouts'|'theme'>('components');
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+export const ComponentLibrarySidebar: React.FC<ComponentLibrarySidebarProps> = ({ selected, onSelect }) => {
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
+    Tools: false,
+    Layouts: false,
+    Navigation: false,
+    Components: false,
+  });
+  const [collapsed, setCollapsed] = useState<boolean>(true); // Sidebar collapsed by default
 
-  const categories = Array.from(new Set(COMPONENT_LIBRARY.map(c => c.category)));
-  
-  const filteredComponents = COMPONENT_LIBRARY.filter(comp =>
-    comp.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    comp.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleExpand = (group: string) => {
+    setExpanded((prev) => ({ ...prev, [group]: !prev[group] }));
+  };
 
-  const componentsByCategory = categories.reduce((acc, category) => {
-    acc[category] = filteredComponents.filter(c => c.category === category);
-    return acc;
-  }, {} as Record<string, typeof COMPONENT_LIBRARY>);
-
-  function toggleCategory(cat: string) {
-    setExpandedCategories(prev => ({ ...prev, [cat]: !prev[cat] }));
-  }
+  // Sidebar structure (only friendly names, no internal names)
+  const sidebarGroups = [
+    {
+      key: 'tools',
+      label: GROUP_LABELS['tools'],
+      children: [
+        { key: 'theme-generator', label: FRIENDLY_NAMES['theme-generator'] },
+      ],
+    },
+    {
+      key: 'layouts',
+      label: GROUP_LABELS['layouts'],
+      children: [
+        { key: 'page-layouts', label: FRIENDLY_NAMES['page-layouts'] },
+      ],
+    },
+    {
+      key: 'navigation',
+      label: GROUP_LABELS['navigation'],
+      children: [
+        { key: 'menubar', label: FRIENDLY_NAMES['menubar'] },
+        { key: 'tabs', label: FRIENDLY_NAMES['tabs'] },
+      ],
+    },
+    {
+      key: 'components',
+      label: GROUP_LABELS['components'],
+      children: [
+        {
+          key: 'forms',
+          label: 'Forms',
+          children: [
+            { key: 'input', label: FRIENDLY_NAMES['input'] },
+            { key: 'label', label: FRIENDLY_NAMES['label'] },
+            { key: 'checkbox', label: FRIENDLY_NAMES['checkbox'] },
+            { key: 'switch', label: FRIENDLY_NAMES['switch'] },
+            { key: 'select', label: FRIENDLY_NAMES['select'] },
+            { key: 'textarea', label: FRIENDLY_NAMES['textarea'] },
+          ],
+        },
+        {
+          key: 'data',
+          label: 'Data',
+          children: [
+            { key: 'badge', label: FRIENDLY_NAMES['badge'] },
+            { key: 'carousel', label: FRIENDLY_NAMES['carousel'] },
+          ],
+        },
+        {
+          key: 'panel',
+          label: 'Panel',
+          children: [
+            { key: 'card', label: FRIENDLY_NAMES['card'] },
+            { key: 'button', label: FRIENDLY_NAMES['button'] },
+          ],
+        },
+      ],
+    },
+  ];
 
   return (
-    <div className={`transition-all duration-200 bg-[var(--card)] border-r border-[var(--border)] flex flex-col h-full ${collapsed ? 'w-12 min-w-[3rem]' : 'w-72'}`}>
-      <div className="p-3 border-b border-[var(--border)] flex items-center gap-3">
-        <button
-          className="mr-2 p-1 rounded hover:bg-[var(--muted)]"
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          onClick={onToggleCollapse}
-        >
-          <span aria-hidden>{collapsed ? '»' : '«'}</span>
-        </button>
-        {!collapsed && <>
-          <Box20Regular className="text-[var(--primary)] w-5 h-5" />
-          <h2 className="font-semibold text-base">Tools</h2>
-        </>}
-        {!collapsed && (
-          <div className="ml-auto flex gap-1">
-            <button className={`px-3 py-1 rounded ${activeTab === 'components' ? 'bg-[var(--accent)] text-[var(--accent-foreground)]' : 'hover:bg-[color-mix(in_oklch,var(--secondary)_50%,transparent)]'}`} onClick={() => setActiveTab('components')}>Components</button>
-            <button className={`px-3 py-1 rounded ${activeTab === 'layouts' ? 'bg-[var(--accent)] text-[var(--accent-foreground)]' : 'hover:bg-[color-mix(in_oklch,var(--secondary)_50%,transparent)]'}`} onClick={() => setActiveTab('layouts')}>Layouts</button>
-            <button className={`px-3 py-1 rounded ${activeTab === 'theme' ? 'bg-[var(--accent)] text-[var(--accent-foreground)]' : 'hover:bg-[color-mix(in_oklch,var(--secondary)_50%,transparent)]'}`} onClick={() => setActiveTab('theme')}>Theme</button>
+    <nav
+      className="w-64 h-full border-r flex flex-col py-4 px-2 text-base"
+      style={{
+        background: 'var(--sidebar)',
+        borderColor: 'var(--sidebar-border)',
+        color: 'var(--sidebar-foreground)',
+      }}
+    >
+        <div className="flex items-center justify-between px-4 py-2">
+          {!collapsed && <span className="font-bold text-lg">Builder</span>}
+          <button
+            className="ml-auto p-1 rounded hover:bg-accent/30"
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            onClick={() => setCollapsed(c => !c)}
+          >
+            {collapsed ? (
+              <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M7 5l6 5-6 5V5z" fill="currentColor"/></svg>
+            ) : (
+              <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><path d="M13 5l-6 5 6 5V5z" fill="currentColor"/></svg>
+            )}
+          </button>
+        </div>
+      <div className="flex-1 overflow-y-auto">
+        {sidebarGroups.map((group) => (
+          <div key={group.key} className="mb-2">
+            <button
+              className="flex items-center w-full px-2 py-1 font-semibold rounded transition text-base"
+              style={{
+                color: 'var(--sidebar-foreground)',
+                background: 'transparent',
+              }}
+              onClick={() => handleExpand(group.key)}
+              aria-expanded={expanded[group.key]}
+              onMouseOver={e => (e.currentTarget.style.background = 'var(--sidebar-accent)')}
+              onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
+            >
+              <span className="mr-2">
+                {expanded[group.key] ? '▼' : '▶'}
+              </span>
+              {group.label}
+            </button>
+            {expanded[group.key] && group.children && (
+              <ul className="ml-6 mt-1">
+                {group.children.map((item) => (
+                  item.children ? (
+                    <li key={item.key}>
+                      <button
+                        className="flex items-center w-full px-2 py-1 font-semibold rounded transition text-base"
+                        style={{
+                          color: 'var(--sidebar-foreground)',
+                          background: 'transparent',
+                        }}
+                        onClick={() => handleExpand(item.key)}
+                        aria-expanded={expanded[item.key]}
+                        onMouseOver={e => (e.currentTarget.style.background = 'var(--sidebar-accent)')}
+                        onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
+                      >
+                        <span className="mr-2">{expanded[item.key] ? '▼' : '▶'}</span>
+                        {item.label}
+                      </button>
+                      {expanded[item.key] && (
+                        <ul className="ml-6 mt-1">
+                          {item.children.map((subitem: any) => (
+                            <li key={subitem.key}>
+                              <button
+                                className={cn(
+                                  'w-full text-left px-2 py-1 rounded transition text-base',
+                                  selected === subitem.key ? 'font-semibold' : ''
+                                )}
+                                style={{
+                                  color: selected === subitem.key ? 'var(--sidebar-accent-foreground)' : 'var(--sidebar-foreground)',
+                                  background: selected === subitem.key ? 'var(--sidebar-accent)' : 'transparent',
+                                }}
+                                onClick={() => onSelect(subitem.key)}
+                                onMouseOver={e => (e.currentTarget.style.background = 'var(--sidebar-accent)')}
+                                onMouseOut={e => (e.currentTarget.style.background = selected === subitem.key ? 'var(--sidebar-accent)' : 'transparent')}
+                              >
+                                {subitem.label}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ) : (
+                    <li key={item.key}>
+                      <button
+                        className={cn(
+                          'w-full text-left px-2 py-1 rounded transition text-base',
+                          selected === item.key ? 'font-semibold' : ''
+                        )}
+                        style={{
+                          color: selected === item.key ? 'var(--sidebar-accent-foreground)' : 'var(--sidebar-foreground)',
+                          background: selected === item.key ? 'var(--sidebar-accent)' : 'transparent',
+                        }}
+                        onClick={() => onSelect(item.key)}
+                        onMouseOver={e => (e.currentTarget.style.background = 'var(--sidebar-accent)')}
+                        onMouseOut={e => (e.currentTarget.style.background = selected === item.key ? 'var(--sidebar-accent)' : 'transparent')}
+                      >
+                        {item.label}
+                      </button>
+                    </li>
+                  )
+                ))}
+              </ul>
+            )}
           </div>
-        )}
+        ))}
       </div>
-
-      {!collapsed && activeTab === 'components' && (
-        <div className="p-3 flex-1 overflow-auto">
-          <div className="relative mb-3">
-            <Search16Regular className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)] w-4 h-4" />
-            <Input
-              placeholder="Search components..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 bg-[var(--background)]"
-            />
-          </div>
-
-          <div className="space-y-2">
-            {categories.map(category => {
-              const components = componentsByCategory[category];
-              if (components.length === 0) return null;
-              const isExpanded = !!expandedCategories[category];
-              return (
-                <div key={category}>
-                  <button
-                    className="flex items-center gap-2 w-full text-left font-medium text-sm py-1 px-2 rounded hover:bg-[var(--muted)]"
-                    onClick={() => toggleCategory(category)}
-                  >
-                    <span>{category}</span>
-                    <span className="ml-auto text-xs text-[var(--muted-foreground)]">{isExpanded ? '-' : '+'}</span>
-                  </button>
-                  {isExpanded && (
-                    <div className="pl-4 space-y-1">
-                      {components.map(comp => (
-                        <button
-                          key={comp.type}
-                          className="w-full text-left px-2 py-1 rounded hover:bg-[color-mix(in_oklch,var(--accent)_30%,transparent)]"
-                          onClick={() => onComponentSelect(comp.type)}
-                        >
-                          <span className="font-mono text-xs mr-2">{comp.type}</span>
-                          <span>{comp.description}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-      {!collapsed && activeTab === 'layouts' && (
-        <div className="p-3 flex-1 overflow-auto">
-          <PageLayoutPicker />
-        </div>
-      )}
-      {!collapsed && activeTab === 'theme' && (
-        <div className="p-3 flex-1 overflow-auto">
-          <ThemeDesigner />
-        </div>
-      )}
-    </div>
+    </nav>
   );
-}
+};
