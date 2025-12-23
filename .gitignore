@@ -1,3 +1,6 @@
+# Ignore all workflow files except deploy-pages.yml
+.github/workflows/*
+!.github/workflows/deploy-pages.yml
 # Logs
 logs
 *.log
