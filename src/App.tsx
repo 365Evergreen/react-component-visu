@@ -1,3 +1,14 @@
+// Collapsible sidebar state and theme mode
+const getInitialSidebarState = (key: string, fallback = true) => {
+  if (typeof window === 'undefined') return fallback;
+  const stored = localStorage.getItem(key);
+  return stored === null ? fallback : stored === 'true';
+};
+
+const getInitialTheme = () => {
+  if (typeof window === 'undefined') return 'light';
+  return localStorage.getItem('theme-mode') || 'light';
+};
 import { useState, useEffect } from 'react';
 import { getLayoutComponents } from '@/lib/layouts';
 import { useKV } from '@github/spark/hooks';
@@ -11,6 +22,16 @@ import { CanvasComponent, ComponentType } from '@/types/component';
 import { COMPONENT_LIBRARY } from '@/lib/component-library';
 
 function App() {
+  // Collapsible sidebar state
+  const [leftSidebarOpen, setLeftSidebarOpen] = useState(() => getInitialSidebarState('leftSidebarOpen', true));
+  const [rightSidebarOpen, setRightSidebarOpen] = useState(() => getInitialSidebarState('rightSidebarOpen', true));
+  // Theme mode
+  const [theme, setTheme] = useState(() => getInitialTheme());
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('theme-mode', theme);
+  }, [theme]);
   const [components, setComponents] = useKV<CanvasComponent[]>('canvas-components', []);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [exportHistory, setExportHistory] = useKV<any[]>('export-history', []);
@@ -304,11 +325,23 @@ function App() {
       <TopToolbar 
         components={currentComponents}
         onExport={handleExport}
+        theme={theme}
+        onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
       />
 
       <div className="flex-1 flex overflow-hidden">
-        <ComponentLibrarySidebar onComponentSelect={handleAddComponent} />
-        
+        {/* Collapsible Left Sidebar */}
+        <ComponentLibrarySidebar 
+          onComponentSelect={handleAddComponent} 
+          collapsed={!leftSidebarOpen}
+          onToggleCollapse={() => {
+            setLeftSidebarOpen(v => {
+              localStorage.setItem('leftSidebarOpen', (!v).toString());
+              return !v;
+            });
+          }}
+        />
+
         <div className="flex-1 relative">
           {previewComponents && (
             <div className="absolute right-4 top-4 z-20 bg-card p-3 rounded shadow-lg border border-border flex gap-2 items-center">
@@ -332,16 +365,17 @@ function App() {
           />
         </div>
 
-        <ComponentTreeView
-          components={currentComponents}
-          selectedId={selectedId}
-          onSelectComponent={setSelectedId}
-          onDeleteComponent={handleDeleteComponent}
-        />
-
+        {/* Collapsible Right Sidebar */}
         <PropertyPanel
           selectedComponent={selectedComponent}
           onUpdateComponent={handleUpdateComponent}
+          collapsed={!rightSidebarOpen}
+          onToggleCollapse={() => {
+            setRightSidebarOpen(v => {
+              localStorage.setItem('rightSidebarOpen', (!v).toString());
+              return !v;
+            });
+          }}
         />
       </div>
     </div>

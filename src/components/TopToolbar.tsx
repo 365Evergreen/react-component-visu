@@ -9,12 +9,16 @@ import { toast } from 'sonner';
 import { CanvasComponent } from '@/types/component';
 import { generateComponentCode } from '@/lib/code-generator';
 
+import { WeatherSunny20Regular, WeatherMoon20Regular } from '@fluentui/react-icons';
+
 interface TopToolbarProps {
   components: CanvasComponent[];
   onExport: (config: any) => void;
+  theme: string;
+  onToggleTheme: () => void;
 }
 
-export function TopToolbar({ components, onExport }: TopToolbarProps) {
+export function TopToolbar({ components, onExport, theme, onToggleTheme }: TopToolbarProps) {
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [componentName, setComponentName] = useState('MyComponent');
   const [exportType, setExportType] = useState<'local' | 'git'>('local');
@@ -110,6 +114,14 @@ export function TopToolbar({ components, onExport }: TopToolbarProps) {
             <ArrowExport24Regular className="mr-2 w-4 h-4 inline-block" />
             Export
           </Button>
+          <button
+            className="mr-2 p-2 rounded hover:bg-muted"
+            aria-label="Toggle dark/light mode"
+            onClick={onToggleTheme}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? <WeatherSunny20Regular /> : <WeatherMoon20Regular />}
+          </button>
         </div>
       </div>
 

@@ -15,14 +15,36 @@ import { toast } from 'sonner';
 interface PropertyPanelProps {
   selectedComponent: CanvasComponent | null;
   onUpdateComponent: (id: string, updates: Partial<CanvasComponent>) => void;
+  collapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
-export function PropertyPanel({ selectedComponent, onUpdateComponent }: PropertyPanelProps) {
+export function PropertyPanel({ selectedComponent, onUpdateComponent, collapsed = false, onToggleCollapse }: PropertyPanelProps) {
+  if (collapsed) {
+    return (
+      <div className="transition-all duration-200 w-12 min-w-[3rem] bg-card border-l border-border flex flex-col items-center justify-center">
+        <button
+          className="p-1 rounded hover:bg-muted"
+          aria-label="Expand sidebar"
+          onClick={onToggleCollapse}
+        >
+          <span aria-hidden>«</span>
+        </button>
+      </div>
+    );
+  }
   const [generatedCode, setGeneratedCode] = useState('');
 
   if (!selectedComponent) {
     return (
-      <div className="w-80 bg-card border-l border-border flex items-center justify-center">
+      <div className="w-80 bg-card border-l border-border flex items-center justify-center relative">
+        <button
+          className="absolute left-0 top-2 p-1 rounded hover:bg-muted"
+          aria-label="Collapse sidebar"
+          onClick={onToggleCollapse}
+        >
+          <span aria-hidden>»</span>
+        </button>
         <div className="text-center text-muted-foreground p-6">
           <Settings24Regular className="mx-auto mb-3 opacity-50 w-12 h-12" />
           <p className="text-sm">Select a component to edit its properties</p>
@@ -63,7 +85,14 @@ export function PropertyPanel({ selectedComponent, onUpdateComponent }: Property
   };
 
   return (
-    <div className="w-96 bg-card border-l border-border flex flex-col h-full">
+    <div className="w-96 bg-card border-l border-border flex flex-col h-full relative">
+      <button
+        className="absolute left-0 top-2 p-1 rounded hover:bg-muted"
+        aria-label="Collapse sidebar"
+        onClick={onToggleCollapse}
+      >
+        <span aria-hidden>»</span>
+      </button>
       <div className="p-4 border-b border-border">
         <h2 className="font-semibold text-lg flex items-center gap-2">
           <Settings24Regular className="text-primary w-5 h-5 inline-block" />

@@ -109,8 +109,8 @@ function TreeNode({ component, isSelected, selectedId, onSelect, onDelete, depth
         onClick={() => onSelect(component.id)}
         className={`group flex items-center gap-1 px-2 py-1.5 rounded cursor-pointer hover:bg-accent/50 transition-colors ${
           isSelected ? 'bg-accent text-accent-foreground' : ''
-        }`}
-        style={{ paddingLeft: `${depth * 16 + 8}px` }}
+        } tree-node`}
+        data-depth={depth}
       >
         {hasChildren ? (
           <button

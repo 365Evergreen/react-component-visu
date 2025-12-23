@@ -58,11 +58,7 @@ export function CanvasArea({
       onDrop={(e) => handleDrop(e, null)}
     >
       <div 
-        className="min-h-full p-8"
-        style={{
-          backgroundImage: `radial-gradient(circle, oklch(0.25 0.04 260) 1px, transparent 1px)`,
-          backgroundSize: '20px 20px',
-        }}
+        className="min-h-full p-8 canvas-bg"
       >
         {components.length === 0 ? (
           <div className="flex items-center justify-center h-[calc(100vh-200px)]">
@@ -122,6 +118,8 @@ interface CanvasComponentWrapperProps {
   depth?: number;
 }
 
+import { useRef } from 'react';
+
 function CanvasComponentWrapper({ 
   component, 
   isSelected, 
@@ -136,6 +134,33 @@ function CanvasComponentWrapper({
   depth = 0
 }: CanvasComponentWrapperProps) {
   const isContainer = CONTAINER_TYPES.includes(component.type as any);
+  const [editing, setEditing] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Inline editing for text content
+  const canEditText = isSelected && typeof component.props.children === 'string';
+
+  const handleTextClick = (e: React.MouseEvent) => {
+    if (canEditText) {
+      e.stopPropagation();
+      setEditing(true);
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    component.props.children = e.target.value;
+  };
+
+  const handleTextBlur = () => {
+    setEditing(false);
+  };
+
+  const handleTextKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setEditing(false);
+    }
+  };
 
   return (
     <div
@@ -178,7 +203,7 @@ function CanvasComponentWrapper({
           : 'hover:ring-1 hover:ring-border',
         depth > 0 && 'ml-4'
       )}
-      style={{ marginLeft: depth > 0 ? `${depth * 16}px` : undefined }}
+      data-depth={depth}
     >
       {isSelected && (
         <div className="absolute -top-2 -right-2 flex gap-1 z-10">
@@ -193,16 +218,33 @@ function CanvasComponentWrapper({
           </button>
         </div>
       )}
-      
       <div className="absolute top-2 left-2 text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded z-10">
         {component.type}
         {isContainer && ` (${component.children?.length || 0})`}
       </div>
-      
       <div className="mt-6">
-        <ComponentPreview component={component} />
+        {canEditText && editing ? (
+          <input
+            ref={inputRef}
+            type="text"
+            className="border rounded px-2 py-1 text-base w-full"
+            value={component.props.children}
+            onChange={handleTextChange}
+            onBlur={handleTextBlur}
+            onKeyDown={handleTextKeyDown}
+            onClick={e => e.stopPropagation()}
+            placeholder="Edit text..."
+            title="Edit component text"
+          />
+        ) : (
+          <span
+            className={canEditText ? 'cursor-text underline decoration-dotted' : ''}
+            onClick={handleTextClick}
+          >
+            <ComponentPreview component={component} />
+          </span>
+        )}
       </div>
-
       {isContainer && component.children && component.children.length > 0 && (
         <div className="mt-3 space-y-2 border-l-2 border-primary/20 pl-3">
           {component.children.map((child) => (
@@ -223,7 +265,6 @@ function CanvasComponentWrapper({
           ))}
         </div>
       )}
-
       {isContainer && isDropTarget && (
         <div className="mt-2 p-4 border-2 border-dashed border-success rounded-md bg-success/5">
           <p className="text-xs text-center text-success font-medium">Drop here to nest</p>
@@ -256,10 +297,10 @@ function ComponentPreview({ component }: { component: CanvasComponent }) {
       return <label className={cn('text-sm font-medium', styles)}>{props.children || 'Label'}</label>;
     
     case 'Checkbox':
-      return <input type="checkbox" className={cn('w-4 h-4', styles)} />;
+      return <input type="checkbox" className={cn('w-4 h-4', styles)} aria-label={props['aria-label'] || 'Checkbox'} />;
     
     case 'Switch':
-      return <button className={cn('w-11 h-6 rounded-full bg-muted relative', styles)}><span className="absolute left-1 top-1 w-4 h-4 rounded-full bg-background"></span></button>;
+      return <button className={cn('w-11 h-6 rounded-full bg-muted relative', styles)} title={props['aria-label'] || 'Switch'}><span className="absolute left-1 top-1 w-4 h-4 rounded-full bg-background"></span></button>;
     
     case 'Textarea':
       return <textarea placeholder={props.placeholder} className={cn('px-3 py-2 rounded-md border border-input bg-background min-h-20', styles)} />;
@@ -271,7 +312,14 @@ function ComponentPreview({ component }: { component: CanvasComponent }) {
       return <hr className={cn('border-t border-border', styles)} />;
     
     case 'Progress':
-      return <div className={cn('h-2 w-full bg-muted rounded-full overflow-hidden', styles)}><div className="h-full bg-primary" style={{ width: `${props.value || 50}%` }}></div></div>;
+      return (
+        <div className={cn('h-2 w-full bg-muted rounded-full overflow-hidden', styles)}>
+          <div
+            className="h-full bg-primary progress-bar-inner"
+            data-progress={props.value || 50}
+          ></div>
+        </div>
+      );
     
     case 'div':
       return (

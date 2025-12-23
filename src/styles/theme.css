@@ -1,3 +1,31 @@
+/* Indentation for tree nodes in ComponentTreeView */
+.tree-node[data-depth] {
+  padding-left: calc(8px + (var(--depth, 0) * 16px));
+}
+.tree-node[data-depth="0"] { --depth: 0; }
+.tree-node[data-depth="1"] { --depth: 1; }
+.tree-node[data-depth="2"] { --depth: 2; }
+.tree-node[data-depth="3"] { --depth: 3; }
+.tree-node[data-depth="4"] { --depth: 4; }
+.tree-node[data-depth="5"] { --depth: 5; }
+/* CanvasComponentWrapper margin for nesting */
+[data-depth="1"] { margin-left: 16px; }
+[data-depth="2"] { margin-left: 32px; }
+[data-depth="3"] { margin-left: 48px; }
+[data-depth="4"] { margin-left: 64px; }
+[data-depth="5"] { margin-left: 80px; }
+/* Progress bar inner width */
+.progress-bar-inner {
+  transition: width 0.3s;
+}
+.progress-bar-inner[data-progress] {
+  width: attr(data-progress percent);
+}
+/* Canvas background grid pattern */
+.canvas-bg {
+  background-image: radial-gradient(circle, oklch(0.25 0.04 260) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
 @import "tailwindcss";
 
 @import '@radix-ui/colors/sage-dark.css' layer(base);
