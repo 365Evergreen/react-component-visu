@@ -13,6 +13,8 @@ const icons = {
   Components: (
     <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="4" stroke="currentColor" strokeWidth="2"/><circle cx="10" cy="10" r="3" fill="currentColor"/></svg>
   ),
+};
+
 import { Input } from '@/components/ui/input';
 import { PageLayoutPicker } from './PageLayoutPicker';
 import { ThemeDesigner } from './ThemeDesigner';
@@ -69,8 +71,8 @@ export const ComponentLibrarySidebar: React.FC<ComponentLibrarySidebarProps> = (
   const [collapsed, setCollapsed] = useState<boolean>(true); // Sidebar collapsed by default
 
   const handleExpand = (group: string) => {
-    setExpanded((prev) => ({ ...prev, [group]: !prev[group] }));
-  };
+    setExpandedGroups((prev) => ({ ...prev, [group]: !prev[group] }));
+  } 
 
   // Sidebar structure (only friendly names, no internal names)
   const sidebarGroups = [
@@ -165,16 +167,16 @@ export const ComponentLibrarySidebar: React.FC<ComponentLibrarySidebarProps> = (
                 background: 'transparent',
               }}
               onClick={() => handleExpand(group.key)}
-              aria-expanded={expanded[group.key]}
+               aria-expanded={expandedGroups[group.key]}
               onMouseOver={e => (e.currentTarget.style.background = 'var(--sidebar-accent)')}
               onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
             >
               <span className="mr-2">
-                {expanded[group.key] ? '▼' : '▶'}
+                {expandedGroups[group.key] ? '▼' : '▶'}
               </span>
               {group.label}
             </button>
-            {expanded[group.key] && group.children && (
+            {expandedGroups[group.key] && group.children && (
               <ul className="ml-6 mt-1">
                 {group.children.map((item) => (
                   item.children ? (
@@ -186,14 +188,14 @@ export const ComponentLibrarySidebar: React.FC<ComponentLibrarySidebarProps> = (
                           background: 'transparent',
                         }}
                         onClick={() => handleExpand(item.key)}
-                        aria-expanded={expanded[item.key]}
+                        aria-expanded={expandedGroups[item.key]}
                         onMouseOver={e => (e.currentTarget.style.background = 'var(--sidebar-accent)')}
                         onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
                       >
-                        <span className="mr-2">{expanded[item.key] ? '▼' : '▶'}</span>
+                        <span className="mr-2">{expandedGroups[item.key] ? '▼' : '▶'}</span>
                         {item.label}
                       </button>
-                      {expanded[item.key] && (
+                      {expandedGroups[item.key] && (
                         <ul className="ml-6 mt-1">
                           {item.children.map((subitem: any) => (
                             <li key={subitem.key}>
