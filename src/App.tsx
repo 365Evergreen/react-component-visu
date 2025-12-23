@@ -4,6 +4,7 @@ import { Toaster, toast } from 'sonner';
 import { ComponentLibrarySidebar } from '@/components/ComponentLibrarySidebar';
 import { CanvasArea } from '@/components/CanvasArea';
 import { PropertyPanel } from '@/components/PropertyPanel';
+import { ComponentTreeView } from '@/components/ComponentTreeView';
 import { TopToolbar } from '@/components/TopToolbar';
 import { CanvasComponent, ComponentType } from '@/types/component';
 import { COMPONENT_LIBRARY } from '@/lib/component-library';
@@ -249,6 +250,13 @@ function App() {
           onDeleteComponent={handleDeleteComponent}
           onMoveComponent={handleMoveComponent}
           onAddComponentToContainer={handleAddComponentToContainer}
+        />
+
+        <ComponentTreeView
+          components={currentComponents}
+          selectedId={selectedId}
+          onSelectComponent={setSelectedId}
+          onDeleteComponent={handleDeleteComponent}
         />
 
         <PropertyPanel
