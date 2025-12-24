@@ -31,3 +31,38 @@ jobs:
 
       - name: Run tests
         run: npm test -- --run
+
+  deploy-pages:
+    runs-on: ubuntu-latest
+    needs: push-check
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (install all, allow legacy peer deps)
+        run: npm install --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE: '/react-component-visu/'
+
+      - name: Deploy to gh-pages branch using peaceiris
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
