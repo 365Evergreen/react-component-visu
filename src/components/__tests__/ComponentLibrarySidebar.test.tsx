@@ -6,7 +6,7 @@ import { ComponentLibrarySidebar } from '../ComponentLibrarySidebar';
 describe('ComponentLibrarySidebar', () => {
   it('renders tabs and switches to layouts and theme', () => {
     const onSelect = vi.fn();
-    render(<ComponentLibrarySidebar onComponentSelect={(t) => onSelect(t as any)} /> as any);
+    render(<ComponentLibrarySidebar selected={null} onSelect={(t) => onSelect(t as any)} /> as any);
 
     // Components tab is default
     expect(screen.getByText('Tools')).toBeTruthy();
