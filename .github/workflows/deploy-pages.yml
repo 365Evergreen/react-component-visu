@@ -1,7 +1,4 @@
-# Trigger redeploy: touch to force workflow run
 name: Deploy to GitHub Pages
-# Trigger redeploy: touch to force workflow run
-
 
 on:
   push:
@@ -9,27 +6,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: write
       id-token: write
-    env:
-      # Optionally set VITE_BASE for project site deployments (e.g. /your-repo-name/).
-      # You can set this as a Repository Secret named `VITE_BASE` or as an Environment variable.
-      VITE_BASE: ${{ secrets.VITE_BASE }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Debug info
-        run: |
-          echo "GITHUB_REF: $GITHUB_REF"
-          echo "GITHUB_SHA: $GITHUB_SHA"
-          git status
-          git log -1
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -37,14 +23,13 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies (install all, allow legacy peer deps)
-        run: npm install --legacy-peer-deps
-
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
 
       - name: Build
         run: npm run build
         env:
-          VITE_BASE: '/react-component-visu/'
+          VITE_BASE: ${{ secrets.VITE_BASE }}
 
       - name: Deploy to gh-pages branch using peaceiris
         uses: peaceiris/actions-gh-pages@v3
